@@ -2,6 +2,11 @@
   --primary-color: rgb(50, 55, 59);
   --primary-color-hover: rgb(50, 55, 59, 0.9);
   --secondary-color: rgba(236, 0, 216, 0.9);
+  --background-color: white;
+  --text-color: black;
+  --secondary-text-color: rgb(48, 48, 48);
+  --border-color: gainsboro;
+  --card-background-color: rgb(249, 249, 249);
 }
 
 * {
@@ -14,4 +19,49 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+/* For the tag button */
+.tagButton {
+  padding: 3px 10px;
+  outline: none;
+  border: 1px solid var(--secondary-color);
+  font-size: 0.85rem;
+  color: var(--secondary-color);
+  margin-right: 10px;
+  border-radius: 5px;
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+/* For the follow button */
+.followButton {
+  padding: 5px 10px;
+  outline: none;
+  border: 1px solid var(--secondary-color);
+  font-size: 0.85rem;
+  color: var(--secondary-color);
+  border-radius: 50px;
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+/* For the like button */
+.likeButton {
+  padding: 3px 10px;
+  border-radius: 10px;
+  background-color: var(--card-background-color);
+  border: 0px;
+  margin-right: 10px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--secondary-text-color);
+}
+
+.likeButton  span {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
 }

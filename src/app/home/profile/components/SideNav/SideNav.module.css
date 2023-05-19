@@ -1,0 +1,24 @@
+.sideNav {
+  background-color: var(--card-background-color);
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.sideNavItem {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.sideNavItem > div {
+  display: flex;
+  align-items: center;
+}
+
+.sideNavItem > div:nth-of-type(2) {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 10px;
+}
