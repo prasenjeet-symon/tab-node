@@ -1,12 +1,15 @@
 :root {
   --primary-color: rgb(50, 55, 59);
+  --on-primary-color: white;
   --primary-color-hover: rgb(50, 55, 59, 0.9);
   --secondary-color: rgba(236, 0, 216, 0.9);
+  --on-secondary-color: white;
   --background-color: white;
   --text-color: black;
   --secondary-text-color: rgb(48, 48, 48);
   --border-color: gainsboro;
   --card-background-color: rgb(249, 249, 249);
+  --button-border-radius: 10px;
 }
 
 * {
@@ -60,8 +63,37 @@ body {
   color: var(--secondary-text-color);
 }
 
-.likeButton  span {
+.likeButton span {
   display: flex;
   align-items: center;
   margin-left: 5px;
+}
+
+/* Outline Button */
+button.outlineButton {
+  padding: 10px 15px;
+  font-weight: 600;
+  outline: none;
+  border-radius: var(--button-border-radius);
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+button.filledButton {
+  padding: 10px 15px;
+  font-weight: 600;
+  outline: none;
+  border-radius: var(--button-border-radius);
+  border: 0px solid var(--on-secondary-color);
+  color: var(--on-secondary-color);
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+button.filledButton > span {
+  margin-left: 10px;
 }
