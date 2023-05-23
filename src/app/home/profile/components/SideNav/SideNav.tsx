@@ -2,6 +2,7 @@
 
 import styles from './SideNav.module.css';
 import {MdBookmarkBorder,MdOutlinePostAdd, MdOutlineAnalytics,MdOutlineCreditScore, MdOutlinePeopleAlt , MdOutlineStorm, MdOutlinePersonAddAlt1} from 'react-icons/md';
+import {FiSettings} from 'react-icons/fi'
 import { usePathname , useRouter} from 'next/navigation';
 import Link  from 'next/link';
 
@@ -35,27 +36,33 @@ export default function SideNav() {
       </div>
 
       {/* Followers  */}
-      <div className={styles.sideNavItem}>
+      <div onClick={() => router.push('/home/profile/followers')} className={`${styles.sideNavItem} ${isActive('/home/profile/followers')}`}>
         <div> <MdOutlinePeopleAlt/> </div>
         <div> Followers </div>
       </div>
 
       {/* Followings */}
-      <div className={styles.sideNavItem}>
+      <div onClick={() => router.push('/home/profile/followings')} className={`${styles.sideNavItem} ${isActive('/home/profile/followings')}`}>
         <div> <MdOutlinePersonAddAlt1/> </div>
         <div> Followings </div>
       </div>
 
       {/* Sponsors */}
-      <div className={styles.sideNavItem}>
+      <div onClick={() => router.push('/home/profile/sponsers')} className={`${styles.sideNavItem} ${isActive('/home/profile/sponsers')}`}>
         <div> <MdOutlineStorm/> </div>
         <div> Sponsors </div>
       </div>
 
       {/* Sponsoring  */}
-      <div className={styles.sideNavItem}>
+      <div onClick={() => router.push('/home/profile/sponsoring')} className={`${styles.sideNavItem} ${isActive('/home/profile/sponsoring')}`}>
         <div> <MdOutlineCreditScore/> </div>
         <div> Sponsoring </div>
+      </div>
+
+      {/* Profile Setting */}
+      <div onClick={() => router.push('/home/profile/profile-setting')} className={`${styles.sideNavItem} ${isActive('/home/profile/profile-setting')}`}>
+        <div> <FiSettings/> </div>
+        <div> Profile Setting </div>
       </div>
     </section>
   );

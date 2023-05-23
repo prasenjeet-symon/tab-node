@@ -79,8 +79,15 @@ button.outlineButton {
   color: var(--secondary-color);
   background-color: var(--background-color);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
+button.outlineButton span {
+  margin-left: 5px;
+}
+
+/* Filled button */
 button.filledButton {
   padding: 10px 15px;
   font-weight: 600;
@@ -96,4 +103,38 @@ button.filledButton {
 
 button.filledButton > span {
   margin-left: 10px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 25px 0px;
+}
+
+.input label {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.input input, .input textarea {
+  padding: 10px;
+  background-color: var(--background-color);
+  outline: 0px solid var(--secondary-color);
+  color: var(--text-color);
+  width: 100%;
+  border-radius: 5px;
+  border: 0px;
+  border: 2px solid var(--primary-color);
+}
+
+.input input:focus, .input textarea:focus {
+  border: 0px solid var(--primary-color);
+  outline: 2px solid var(--secondary-color);
+}
+
+
+.highlight {
+  color: var(--secondary-text-color) !important;
 }
