@@ -5,38 +5,49 @@ import { FiUploadCloud } from 'react-icons/fi';
 import { MdAdd, MdOutlinePublishedWithChanges, MdPreview } from 'react-icons/md';
 import styles from './Create.module.css';
 import Preview from './components/Preview/Preview';
+import Head from 'next/head';
 
 export default function CreatePost() {
     const previewPopup = useState(false);
     const headingRef = useRef<HTMLDivElement>(null);
     const subHeadingRef = useRef<HTMLDivElement>(null);
     const markdownRef = useRef<HTMLDivElement>(null);
-    const extractedData: { heading: string, subHeading: string, markdown: string  } = { heading: '', subHeading: '', markdown: '' };
+    const extractedData = useState<{ heading: string, subHeading: string, markdown: string  }>({
+        heading:'',
+        markdown: '',
+        subHeading:''
+    });
 
     const handleData = ()=>{
         const heading = headingRef.current?.innerText;
         const subHeading = subHeadingRef.current?.innerText;
         const markdown = markdownRef.current?.innerText;
 
-        extractedData.heading = heading || "";
-        extractedData.subHeading = subHeading || "";
-        extractedData.markdown = markdown || "";
+        const finalExtractedData = {
+            heading: heading || '',
+            markdown:  markdown || '',
+            subHeading: subHeading || ''
+        }
 
-        console.log(heading, subHeading, markdown);
+        extractedData[1](finalExtractedData);
     }
 
     const handleOpenPreviewPopup = () => {
         handleData();
+        // stop the body scroll
+        document.body.classList.toggle('preview-open');
         previewPopup[1](true);
     }
 
     const handleClosePreviewPopup = () => {
+        document.body.classList.toggle('preview-open');
         previewPopup[1](false);
     }
 
-    return ( <section className={styles.create}>
+    return (<>
+    <section className={styles.create}>
+        
         <div>
-
             <div className={styles.createHeader}>
                 <div>Create Post</div>
                 <div>
@@ -72,7 +83,7 @@ export default function CreatePost() {
             </div>
 
             {/* Holds preview popup */}
-            <Preview isOpen={previewPopup[0]} onClose={handleClosePreviewPopup} body={extractedData.markdown} heading={extractedData.heading} subHeading={extractedData.subHeading} cover='' tags={[]}/>
+            <Preview isOpen={previewPopup[0]} onClose={handleClosePreviewPopup} body={extractedData[0].markdown} heading={extractedData[0].heading} subHeading={extractedData[0].subHeading} cover='' tags={[]}/>
         </div>
-    </section> )
+    </section></> )
 }

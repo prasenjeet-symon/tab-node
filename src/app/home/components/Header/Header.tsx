@@ -4,7 +4,7 @@ import styles from './Header.module.css';
 export default function Header() {
   return <section className={`${styles.header}`}>
     <section>
-        <div><span><AiOutlineMenu/></span> <span><AiOutlineSearch/></span> </div>
+        <div><span><AiOutlineSearch/></span> </div>
         <div> TabNode </div>
         <div>
             <div> <AiTwotoneBell/> </div>
