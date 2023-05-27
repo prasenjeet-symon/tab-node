@@ -6,8 +6,7 @@ import styles from './Session.module.css';
 
 export default function SessionPage() {
   const signInWithGithub = () => {
-    const ui =  appwrite.account().createOAuth2Session('github', 'http://localhost:3000/home');
-    console.log(ui);
+    appwrite.account().createOAuth2Session('github', 'http://localhost:3000/onboard/authenticating');
   };
 
   return (

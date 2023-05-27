@@ -34,6 +34,10 @@ class Appwrite {
     const user = await Appwrite.account().createJWT();
     return user.jwt;
   }
+
+  static async currentSession() {
+    return await Appwrite.account().getSession('current');
+  }
 }
 
 export default Appwrite;
