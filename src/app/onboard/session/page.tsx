@@ -1,7 +1,15 @@
+'use client';
+
 import { AiFillGithub, AiFillTwitterCircle } from 'react-icons/ai';
+import appwrite from '../../appwrite';
 import styles from './Session.module.css';
 
 export default function SessionPage() {
+  const signInWithGithub = () => {
+    const ui =  appwrite.account().createOAuth2Session('github', 'http://localhost:3000/home');
+    console.log(ui);
+  };
+
   return (
     <section className={`${styles.sessionPage} `}>
       <div>
@@ -10,14 +18,16 @@ export default function SessionPage() {
           <div>
             <AiFillTwitterCircle size={25} /> <span>Continue with Twitter</span>
           </div>
-          <div>
+          <div onClick={signInWithGithub}>
             <AiFillGithub size={25} /> <span>Continue with GitHub</span>
           </div>
         </div>
         <div></div>
         <div>
           <div>Or sign in using a magic link</div>
-          <div><input placeholder="Email" type="text" /></div>
+          <div>
+            <input placeholder="Email" type="text" />
+          </div>
           <button type="button"> Submit </button>
         </div>
       </div>
