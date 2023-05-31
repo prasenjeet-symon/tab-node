@@ -1,10 +1,20 @@
+'use client'
+
 import styles from './HomePage.module.css';
 import Stories from './components/Stories/Stories';
 import Article from './components/Article/Article';
 import MayFollow from './components/MayFollow/MayFollow'
 import ReadingList from './components/ReadingList/ReadingList';
+import { useEffect } from 'react';
+import AppwriteDatabase from '../database/appwrite-database';
 
 export default function HomePage() {
+  useEffect(()=>{
+     new AppwriteDatabase().fetchLoginUser().then((data)=>{
+      console.log(data, 'USER DDD')
+     })
+  }, []);
+
   return (
     <section className={styles.homePage}>
       <section>

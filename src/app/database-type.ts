@@ -21,9 +21,9 @@ export abstract class AppwriteCollection {
   public static readonly DRAFTED_ARTICLES = 'DRAFTED_ARTICLES';
   public static readonly TRANSACTIONS = 'TRANSACTIONS';
   public static readonly ARTICLE_STORIES = 'ARTICLE_STORIES';
-  public static readonly ARTICLE_STORY_VIEWERS = 'ARTICLE_STORY_VIEWS';
   public static readonly ARTICLE_SERIES = 'ARTICLE_SERIES';
   public static readonly ARTICLE_STORIES_DISTRIBUTION = 'ARTICLE_STORIES_DISTRIBUTION';
+  public static readonly USER_SOCIAL_LINKS = 'USER_SOCIAL_LINKS';
 }
 /**
  *
@@ -32,21 +32,21 @@ export abstract class AppwriteCollection {
  */
 export namespace MBadge {
   export interface SBadge {
-    docID: string;
-    name: string;
+    docID: string; // UUID max length of 36
+    name: string; // max length of 30
   }
 
   export interface STrend {
-    numberOfParticipants: number;
-    numberOfWinner: number;
-    numberOfLoser: number;
+    numberOfParticipants: number; // IntegerField
+    numberOfWinner: number; // IntegerField
+    numberOfLoser: number; //  IntegerField
   }
 
   export interface DBadge {
-    name: string;
-    description: string;
-    color: string;
-    logo: string;
+    name: string; // max length of 30
+    description: string; // max length of 255
+    color: string; // hexadecimal max length 8
+    logo: string; // URL max length of 255
     createdAt: Date;
     updatedAt: Date;
     trend: STrend;
@@ -71,20 +71,25 @@ export namespace MTopic {
   }
 
   interface STrend {
-    numberOfArticles: number;
-    boostPoint: number;
+    numberOfArticles: number; // IntegerField
+    boostPoint: number; // FloatField
     resetDate: Date;
   }
 
   export interface DTopic {
-    name: string;
-    logo: string;
-    color: string;
-    description: string;
+    name: string; // max length of 30
+    logo: string; // URL max length of 255
+    color: string; // hexadecimal max length 8
+    description: string; // max length of 255
     weeklyTrend: STrend;
     monthlyTrend: STrend;
     createdAt: Date;
     updatedAt: Date;
+  }
+
+  export interface ITopic {
+    id: string;
+    doc: DTopic;
   }
 }
 /**
@@ -94,18 +99,20 @@ export namespace MTopic {
  */
 export namespace MAddress {
   export interface SAddress {
-    docID: string;
-    address: string;
+    docID: string; // UUID max length of 36
+    address: string; // max length of 255
   }
 
   export interface DAddress {
-    street: string;
-    city: string;
-    landmark?: string;
-    state: string;
-    country: string;
+    street: string; // max length of 255
+    city: string; // max length of 255
+    landmark?: string; // max length of 255
+    state: string; // max length of 255
+    country: string; // max length of 255
     createdAt: Date;
     updatedAt: Date;
+    zipCode: string; // max length of 255
+    addressOf: MUser.SUser;
   }
 
   export interface IAddress {
@@ -121,38 +128,31 @@ export namespace MAddress {
  */
 export namespace MUser {
   export interface SUser {
-    fullName: string;
-    profilePic: string;
-    aboutMe: string;
-    docID: string;
-  }
-
-  interface SSocialLink {
-    provider: string;
-    link: string;
+    fullName: string; // / max length of 30
+    profilePic: string; // URL max length of 255
+    aboutMe: string; // max length of 255
+    docID: string; //  UUID max length of 36
   }
 
   interface STrend {
-    numberOfTopics: number;
-    numberOfArticles: number;
-    numberOfComments: number;
-    numberOfLikes: number;
-    numberOfDislikes: number;
-    numberOfRead: number;
-    boostPoint: number;
+    numberOfTopics: number; // IntegerField
+    numberOfArticles: number; // IntegerField
+    numberOfComments: number; // IntegerField
+    numberOfLikes: number; // IntegerField
+    numberOfDislikes: number; // IntegerField
+    numberOfRead: number; // IntegerField
+    boostPoint: number; // FloatField
     resetDate: Date;
   }
 
   export interface DUser {
-    fullName: string;
-    email: string;
-    aboutMe: string;
-    mobile: string; // mobile number with country code
+    fullName: string; // / max length of 30
+    email: string; // max length of 255
+    aboutMe: string; //  max length of 255
+    mobile: string; // max length of 12
     isActive: boolean;
-    profilePic: string;
+    profilePic: string; // URL max length of 255
     address: MAddress.SAddress;
-    topics: MTopic.STopic[];
-    socialLinks: SSocialLink[];
     trend: STrend;
     createdAt: Date;
     updatedAt: Date;
@@ -170,15 +170,15 @@ export namespace MUser {
  */
 export namespace MArticleSeries {
   export interface SArticleSeries {
-    docID: string;
-    name: string;
+    docID: string; // UUID max length of 36
+    name: string; // max length of 30
   }
 
   export interface DArticleSeries {
-    name: string;
-    description: string;
-    coverImage: string;
-    numberOfArticles: number;
+    name: string; // max length of 30
+    description: string; // max length of 255
+    coverImage: string; // URL max length of 255
+    numberOfArticles: number; // IntegerField
     createdAt: Date;
     updatedAt: Date;
   }
@@ -195,20 +195,19 @@ export namespace MArticleSeries {
  */
 export namespace MArticle {
   export interface SArticle {
-    docID: string;
-    title: string;
+    docID: string; // UUID max length of 36
+    title: string; // Article title max length of 255
   }
 
   export interface DArticle {
-    title: string;
-    subTitle: string;
-    body: string;
-    coverImage: string;
-    topics: MTopic.STopic[];
+    title: string; // Article title max length of 255
+    subTitle: string; // Article sub title max length of 255
+    body: string; // Article body max length of 65535
+    coverImage: string; // URL max length of 255
     createdAt: Date;
     updatedAt: Date;
     writer: MUser.SUser;
-    readTimeInMin: number;
+    readTimeInMin: number; // FloatField
     articleSeries: MArticleSeries.SArticleSeries | null;
   }
 
@@ -224,13 +223,13 @@ export namespace MArticle {
  */
 export namespace MArticleComment {
   export interface SArticleComment {
-    docID: string;
+    docID: string; // UUID max length of 36
   }
 
   export interface DArticleComment {
-    body: string;
-    createdAt: Date;
-    updatedAt: Date;
+    body: string; // Article body max length of 65535
+    createdAt: Date; // DateField
+    updatedAt: Date; // DateField
     commentedBy: MUser.SUser;
     article: MArticle.SArticle;
     writer: MUser.SUser; // article writer
@@ -249,13 +248,17 @@ export namespace MArticleComment {
  */
 export namespace MArticleLike {
   export type likesStatus = 'LIKED' | 'DISLIKED';
+  export enum ENUM_likesStatus {
+    LIKED = 'LIKED',
+    DISLIKED = 'DISLIKED',
+  }
 
   export interface DArticleLike {
     likedBy: MUser.SUser;
     article: MArticle.SArticle;
     createdAt: Date;
     updatedAt: Date;
-    status: likesStatus;
+    status: likesStatus; // ENUM FLAG
   }
 
   export interface IArticleLike {
@@ -270,8 +273,6 @@ export namespace MArticleLike {
  */
 
 export namespace MSavedArticle {
-  export interface SSavedArticle {}
-
   export interface DSavedArticle {
     article: MArticle.SArticle;
     savedBy: MUser.SUser;
@@ -291,16 +292,14 @@ export namespace MSavedArticle {
  *
  */
 export namespace MArticleReader {
-  export interface SArticleReader {}
-
   export interface DArticleReader {
     article: MArticle.SArticle;
     reader: MUser.SUser;
     writer: MUser.SUser; // article writer
     createdAt: Date;
     updatedAt: Date;
-    readTimeInMin: number;
-    articleTimeInMin: number;
+    readTimeInMin: number; // FloatField
+    articleTimeInMin: number; // FloatField
   }
 
   export interface IArticleReader {
@@ -315,15 +314,18 @@ export namespace MArticleReader {
  */
 export namespace MBadgeChallenge {
   export type badgeStatus = 'PENDING' | 'COMPLETED' | 'FAILED';
-
-  export interface SBadgeChallenge {}
+  export enum ENUM_badgeStatus {
+    PENDING = 'PENDING',
+    COMPLETED = 'COMPLETED',
+    FAILED = 'FAILED',
+  }
 
   export interface DBadgeChallenge {
     participant: MUser.SUser;
     badge: MBadge.SBadge;
     createdAt: Date;
     updatedAt: Date;
-    status: badgeStatus;
+    status: badgeStatus; // ENUM FLAG
   }
 
   export interface IBadgeChallenge {
@@ -338,8 +340,8 @@ export namespace MBadgeChallenge {
  */
 export namespace MUserRelationship {
   export interface STrend {
-    boostPoint: number;
-    resetDate: Date;
+    boostPoint: number; // FloatField
+    resetDate: Date; // DateField
   }
 
   export interface DUserRelationship {
@@ -363,8 +365,8 @@ export namespace MUserRelationship {
  */
 export namespace MUserTopicRelationship {
   export interface STrend {
-    boostPoint: number;
-    resetDate: Date;
+    boostPoint: number; // FloatField
+    resetDate: Date; // DateField
   }
 
   export interface DUserTopicRelationship {
@@ -373,6 +375,7 @@ export namespace MUserTopicRelationship {
     createdAt: Date;
     updatedAt: Date;
     trend: STrend;
+    isStable: boolean;
   }
 
   export interface IUserTopicRelationship {
@@ -387,8 +390,8 @@ export namespace MUserTopicRelationship {
  */
 export namespace MArticleTopicRelationship {
   export interface STrend {
-    boostPoint: number;
-    resetDate: Date;
+    boostPoint: number; // FloatField
+    resetDate: Date; // DateField
   }
 
   export interface DArticleTopicRelationship {
@@ -415,9 +418,9 @@ export namespace MUserRelationSuggestion {
     user: MUser.SUser;
     createdAt: Date;
     updatedAt: Date;
-    impressionCount: number;
-    boostPoint: number;
-    isStale: boolean;
+    impressionCount: number; // IntegerField
+    boostPoint: number; // FloatField
+    isStale: boolean; //  BooleanField
   }
 
   export interface IUserRelationSuggestion {
@@ -435,8 +438,8 @@ export namespace MArticleRelationSuggestion {
     article: MArticle.SArticle;
     createdAt: Date;
     updatedAt: Date;
-    impressionCount: number;
-    boostPoint: number;
+    impressionCount: number; // IntegerField
+    boostPoint: number; // FloatField
     isStale: boolean;
   }
 
@@ -451,8 +454,6 @@ export namespace MArticleRelationSuggestion {
  *
  */
 export namespace MUserActivity {
-  export interface SUserActivity {}
-
   type activityAction = 'LIKE' | 'READ' | 'COMMENT' | 'SAVE' | 'CREATE' | 'DISLIKE';
 
   export interface DUserActivity {
@@ -477,7 +478,7 @@ export namespace MUserNotification {
   export interface DUserNotification {
     user: MUser.SUser;
     notification: string;
-    link: string;
+    link: string; // URL Max  length of 255
     isRead: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -513,14 +514,14 @@ export namespace MDraftedArticle {
  */
 export namespace MArticleStory {
   export interface SArticleStory {
-    docID: string;
+    docID: string; // UUIDField max  length of 36
   }
 
   export interface DArticleStory {
     article: MArticle.SArticle;
     story: {
-      backgroundImage: string;
-      summery: string;
+      backgroundImage: string; // URL max length of 255
+      summery: string; // Article summery max length of 500
     };
     createdAt: Date;
     updatedAt: Date;
@@ -545,10 +546,27 @@ export namespace MArticleStoryDistribution {
     createdAt: Date;
     updatedAt: Date;
     expireAt: Date;
+    isSeen: boolean;
   }
 
   export interface IArticleStoryDistribution {
     id: string;
     doc: DArticleStoryDistribution;
+  }
+}
+
+/** For the user social links */
+export namespace MUserSocialLink {
+  export interface DUserSocialLink {
+    user: MUser.SUser;
+    socialLink: string; // URL max  length of 255
+    type: 'WEB' | 'TWITTER' | 'INSTAGRAM' | 'LINKEDIN' | 'GITHUB';
+    createdAt: Date;
+    updatedAt: Date;
+  }
+
+  export interface IUserSocialLink {
+    id: string;
+    doc: DUserSocialLink;
   }
 }

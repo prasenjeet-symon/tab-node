@@ -1,8 +1,9 @@
-import { Account, Client } from 'appwrite';
+import { Account, Client, Databases } from 'appwrite';
 
 class Appwrite {
   private static appwrite: Client;
   private static appwriteAccount: Account;
+  private static appwriteDatabase: Databases;
 
   private static initialize(endpoint: string, project: string) {
     if (!Appwrite.appwrite) {
@@ -37,6 +38,24 @@ class Appwrite {
 
   static async currentSession() {
     return await Appwrite.account().getSession('current');
+  }
+
+  /** Get the current logged in user userID */
+  static async currentUserID() {
+    return (await Appwrite.account().get())['$id'];
+  }
+
+  /** Get the current logged in user  */
+  static async currentUser() {
+     return await Appwrite.account().get();
+  }
+
+  // For the database
+  static database() {
+    if (!Appwrite.appwriteDatabase) {
+      Appwrite.appwriteDatabase = new Databases(Appwrite.client());
+    }
+    return Appwrite.appwriteDatabase;
   }
 }
 
