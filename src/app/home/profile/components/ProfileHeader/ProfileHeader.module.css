@@ -1,0 +1,60 @@
+.profileHeader {
+  position: relative;
+  background-color: var(--card-background-color);
+  margin-top: 70px;
+  padding: 0px 50px 20px 50px;
+}
+
+.profileHeader > div:nth-of-type(1) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileHeader > div:nth-of-type(1) img {
+  position: absolute;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.profileHeader > div:nth-of-type(2) {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 60px;
+  color: var(--tex-color);
+}
+
+.profileHeader > div:nth-of-type(3) {
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 400;
+  color: var(--secondary-text-color);
+  margin: 10px 0px;
+}
+
+.profileHeader > div:nth-of-type(4) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.profileHeader > div:nth-of-type(4) > div,
+.profileHeader > div:nth-of-type(4) > div > span {
+  display: flex;
+  align-items: center;
+}
+
+.profileHeader > div:nth-of-type(4) > div {
+    margin-left: 20px;
+}
+
+.profileHeader > div:nth-of-type(4) > div > span:nth-of-type(2) {
+  margin-left: 5px;
+}

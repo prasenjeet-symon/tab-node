@@ -1,0 +1,15 @@
+.followers {
+  margin: 35px 0px;
+}
+
+.followers > div:nth-of-type(1) {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0px 0px 25px 0px;
+}
+
+.followers > div:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}

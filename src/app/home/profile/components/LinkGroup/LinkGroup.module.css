@@ -1,0 +1,16 @@
+.linkGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  background-color: var(--card-background-color);
+  padding: 10px;
+}
+
+.linkGroup > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
