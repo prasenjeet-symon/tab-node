@@ -1,0 +1,25 @@
+.sideNavItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: var(--button-border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.sideNavItem:hover {
+  background-color: var(--secondary-color);
+  color: var(--on-secondary-color);
+}
+
+.sideNavItem > div:nth-of-type(1) {
+  margin-right: 10px;
+}
+
+.activeLink {
+  background-color: var(--secondary-color);
+  color: var(--on-secondary-color);
+  cursor: pointer;
+}
