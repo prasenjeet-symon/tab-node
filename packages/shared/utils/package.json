@@ -1,0 +1,32 @@
+{
+  "name": "@tabnode/utils",
+  "version": "1.0.0",
+  "description": "Utils functions for the tabNode",
+  "author": "prasenjeet simon",
+  "homepage": "",
+  "license": "MIT",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
+  "typings": "build/esm/index.d.ts",
+  "type": "module",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "del": "^7.0.0",
+    "rollup": "^3.23.0",
+    "rollup-plugin-typescript2": "^0.34.1"
+  },
+  "dependencies": {
+    "node-appwrite": "^9.0.0"
+  }
+}

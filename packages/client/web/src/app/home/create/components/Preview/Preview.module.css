@@ -1,0 +1,37 @@
+
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: +10;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.preview.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.footer {
+  padding: 10px;
+  background-color: var(--card-background-color);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer button {
+  padding: 10px 45px;
+}

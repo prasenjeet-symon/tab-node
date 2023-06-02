@@ -1,0 +1,15 @@
+{
+  "name": "tabnode",
+  "private": true,
+  "workspaces": [
+    "packages/server/db-events/*",
+    "packages/client/*",
+    "packages/shared/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.6.2"
+  },
+  "scripts": {
+    "setup": "npx lerna bootstrap"
+  }
+}

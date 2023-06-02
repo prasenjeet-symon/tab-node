@@ -1,0 +1,45 @@
+.mayFollow {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.mayFollow > div:nth-of-type(1) {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.blogger {
+  display: flex;
+  align-items: center;
+  margin: 15px 0px;
+}
+
+.blogger > div:nth-of-type(2) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.blogger > div:nth-of-type(1) img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.blogger > div:nth-of-type(2) > div:nth-of-type(1) {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 3px;
+  color: var(--text-color);
+}
+
+.blogger > div:nth-of-type(2) > div:nth-of-type(2) {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--secondary-text-color);
+}
