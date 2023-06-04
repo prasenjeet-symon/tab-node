@@ -10,6 +10,7 @@
     "lerna": "^6.6.2"
   },
   "scripts": {
-    "setup": "npx lerna bootstrap"
+    "setup": "npx lerna bootstrap",
+    "utilsWatch": "npx lerna exec npm run watch --scope=@tabnode/utils"
   }
 }
