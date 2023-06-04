@@ -23,6 +23,7 @@ export declare abstract class AppwriteCollection {
     static readonly ARTICLE_SERIES = "ARTICLE_SERIES";
     static readonly ARTICLE_STORIES_DISTRIBUTION = "ARTICLE_STORIES_DISTRIBUTION";
     static readonly USER_SOCIAL_LINKS = "USER_SOCIAL_LINKS";
+    static readonly ARTICLES_DISTRIBUTION = "ARTICLES_DISTRIBUTION";
 }
 /**
  *
@@ -79,6 +80,7 @@ export declare namespace MTopic {
         monthlyTrend: STrend;
         createdAt: Date;
         updatedAt: Date;
+        associatedUsersCount: number;
     }
     export interface ITopic {
         id: string;
@@ -131,6 +133,9 @@ export declare namespace MUser {
         numberOfLikes: number;
         numberOfDislikes: number;
         numberOfRead: number;
+        numberOfSaved: number;
+        numberOfClick: number;
+        numberOfShare: number;
         boostPoint: number;
         resetDate: Date;
     }
@@ -549,6 +554,36 @@ export declare namespace MUserSocialLink {
     interface IUserSocialLink {
         id: string;
         doc: DUserSocialLink;
+    }
+}
+/** For the articles distribution */
+export declare namespace MArticleDistribution {
+    type trackOrderType = "DATE_ASC" | "DATE_DESC";
+    enum enum_trackOrderType {
+        DATE_ASC = "DATE_ASC",
+        DATE_DESC = "DATE_DESC"
+    }
+    enum enum_articlePhase {
+        "PHASE_1" = 10,
+        "PHASE_2" = 30,
+        "PHASE_3" = 60
+    }
+    interface DArticleDistribution {
+        phase: number;
+        among: string;
+        boostPoint: number;
+        impressionCount: number;
+        trackOrder: trackOrderType;
+        createdAt: Date;
+        updatedAt: Date;
+        isStale: boolean;
+        article: MArticle.SArticle;
+        topicIDS: string[];
+        lastUserIDS: string[];
+    }
+    interface IArticleDistribution {
+        id: string;
+        doc: DArticleDistribution;
     }
 }
 //# sourceMappingURL=database-types.d.ts.map

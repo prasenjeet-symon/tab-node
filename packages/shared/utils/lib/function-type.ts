@@ -1,3 +1,25 @@
+export abstract class ArticleBoostPoints {
+  static readonly like = 1;
+  static readonly dislike = -2;
+  static readonly comment = 5;
+  static readonly read = 6;
+  static readonly click = 1;
+  static readonly share = 3;
+  static readonly save = 5;
+  static readonly create = 10;
+}
+
+export abstract class UserBoostPoints {
+  static readonly read = 5;
+  static readonly click = 1;
+  static readonly like = 2;
+  static readonly dislike = 2;
+  static readonly comment = 5;
+  static readonly share = 3;
+  static readonly save = 5;
+  static readonly create = 10;
+}
+
 export namespace AWFunction {
   export type httpStatusCodes = 200 | 400 | 401 | 403 | 404 | 500;
 

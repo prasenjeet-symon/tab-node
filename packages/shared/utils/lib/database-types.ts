@@ -24,6 +24,7 @@ export abstract class AppwriteCollection {
   public static readonly ARTICLE_SERIES = "ARTICLE_SERIES";
   public static readonly ARTICLE_STORIES_DISTRIBUTION = "ARTICLE_STORIES_DISTRIBUTION";
   public static readonly USER_SOCIAL_LINKS = "USER_SOCIAL_LINKS";
+  public static readonly ARTICLES_DISTRIBUTION = "ARTICLES_DISTRIBUTION";
 }
 /**
  *
@@ -85,6 +86,7 @@ export namespace MTopic {
     monthlyTrend: STrend;
     createdAt: Date;
     updatedAt: Date;
+    associatedUsersCount: number; // IntegerField
   }
 
   export interface ITopic {
@@ -141,6 +143,9 @@ export namespace MUser {
     numberOfLikes: number; // IntegerField
     numberOfDislikes: number; // IntegerField
     numberOfRead: number; // IntegerField
+    numberOfSaved: number; // IntegerField
+    numberOfClick: number; // IntegerField
+    numberOfShare: number; // IntegerField
     boostPoint: number; // FloatField
     resetDate: Date;
   }
@@ -414,8 +419,8 @@ export namespace MArticleTopicRelationship {
  */
 export namespace MUserRelationSuggestion {
   export interface DUserRelationSuggestion {
-    for: MUser.SUser;
-    user: MUser.SUser;
+    for: MUser.SUser; // this is suggestion for this user
+    user: MUser.SUser; // suggest this user
     createdAt: Date;
     updatedAt: Date;
     impressionCount: number; // IntegerField
@@ -434,7 +439,7 @@ export namespace MUserRelationSuggestion {
  */
 export namespace MArticleRelationSuggestion {
   export interface DArticleRelationSuggestion {
-    for: MUser.SUser;
+    for: MUser.SUser; // this is suggestion for this user
     article: MArticle.SArticle;
     createdAt: Date;
     updatedAt: Date;
@@ -591,5 +596,44 @@ export namespace MUserSocialLink {
   export interface IUserSocialLink {
     id: string;
     doc: DUserSocialLink;
+  }
+}
+
+/** For the articles distribution */
+export namespace MArticleDistribution {
+  export type trackOrderType = "DATE_ASC" | "DATE_DESC";
+  export enum enum_trackOrderType {
+    DATE_ASC = "DATE_ASC",
+    DATE_DESC = "DATE_DESC",
+  }
+
+  export enum enum_articlePhase {
+    "PHASE_1" = 10,
+    "PHASE_2" = 30,
+    "PHASE_3" = 60,
+  }
+  export interface DArticleDistribution {
+    phase: number; // like 1, 2, 3, ...
+    among: string; // example 20_345 , where 20 is 20 percent and its actual amount is 345 because this property is never involved in sorting so string value use phase for sorting if needed
+    boostPoint: number;
+    // impression count is total number of times the article is seen the user ( may or may not clicked )
+    // there is impression threshold, after that the article will be marked stale by the tabnode and will not be distributed for next phase ( currently impression threshold is 100%. if all the target user have seen this article then marked as stale if not distributed to next phase )
+    // but before impression threshold if the distribution boost point is greater then certain limit then article will be distribution for next phase
+    impressionCount: number;
+    trackOrder: trackOrderType;
+    createdAt: Date;
+    updatedAt: Date;
+    isStale: boolean; // stale if the article is distributed for the next phase or reached the impression threshold
+    article: MArticle.SArticle;
+    // there is one to one mapping of topicsIDS and lastUserIDS
+    // topicIDS --> [ topicid1, topicid2, topicid3, .... ] --> attach index at the end for sorting like --> [ topicid1__1, topicid1__2, topicid1__3, ....  ]
+    // lastUserIDS --> [ userid1, userid2, userid3, .... ] --> attach index at the end for sorting like --> [ userid1__1, userid1__2, userid1__3, ....  ]
+    topicIDS: string[];
+    lastUserIDS: string[];
+  }
+
+  export interface IArticleDistribution {
+    id: string;
+    doc: DArticleDistribution;
   }
 }

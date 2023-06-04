@@ -1,0 +1,23 @@
+{
+  "name": "@tabnode/functions-db-create-comments",
+  "version": "1.0.0",
+  "description": "",
+  "author": "prasenjeet-symon <prasenjeetsymon@outlook.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1",
+    "rollup": "^3.23.0",
+    "rollup-plugin-typescript2": "^0.34.1"
+  },
+  "dependencies": {
+    "@tabnode/utils": "^1.0.0",
+    "node-appwrite": "^9.0.0",
+    "uuid": "^9.0.0",
+    "immer": "^10.0.2"
+  }
+}
