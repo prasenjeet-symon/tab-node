@@ -85,6 +85,8 @@ export declare namespace MTopic {
     export interface ITopic {
         id: string;
         doc: DTopic;
+        isSelected?: boolean;
+        ofNetwork?: boolean;
     }
     export {};
 }
@@ -200,6 +202,7 @@ export declare namespace MArticle {
         writer: MUser.SUser;
         readTimeInMin: number;
         articleSeries: MArticleSeries.SArticleSeries | null;
+        canPublishStory: boolean;
     }
     interface IArticle {
         id: string;
@@ -235,7 +238,7 @@ export declare namespace MArticleComment {
  *
  */
 export declare namespace MArticleLike {
-    type likesStatus = "LIKED" | "DISLIKED";
+    type likesStatus = 'LIKED' | 'DISLIKED';
     enum ENUM_likesStatus {
         LIKED = "LIKED",
         DISLIKED = "DISLIKED"
@@ -296,7 +299,7 @@ export declare namespace MArticleReader {
  *
  */
 export declare namespace MBadgeChallenge {
-    type badgeStatus = "PENDING" | "COMPLETED" | "FAILED";
+    type badgeStatus = 'PENDING' | 'COMPLETED' | 'FAILED';
     enum ENUM_badgeStatus {
         PENDING = "PENDING",
         COMPLETED = "COMPLETED",
@@ -427,7 +430,16 @@ export declare namespace MArticleRelationSuggestion {
  *
  */
 export declare namespace MUserActivity {
-    type activityAction = "LIKE" | "READ" | "COMMENT" | "SAVE" | "CREATE" | "DISLIKE";
+    type activityAction = 'LIKE' | 'READ' | 'COMMENT' | 'SAVE' | 'CREATE' | 'DISLIKE' | 'JOINED';
+    export enum ENUM_activityAction {
+        LIKE = "LIKE",
+        READ = "READ",
+        COMMENT = "COMMENT",
+        SAVE = "SAVE",
+        CREATE = "CREATE",
+        DISLIKE = "DISLIKE",
+        JOINED = "JOINED"
+    }
     export interface DUserActivity {
         user: MUser.SUser;
         article: MArticle.SArticle;
@@ -447,8 +459,8 @@ export declare namespace MUserActivity {
  *
  */
 export declare namespace MUserNotification {
-    type notificationTopic = "LIKE" | "COMMENT" | "FOLLOW" | "MENTION" | "GENERAL";
-    type notificationOriginator = "TABNODE" | "USER";
+    type notificationTopic = 'LIKE' | 'COMMENT' | 'FOLLOW' | 'MENTION' | 'GENERAL';
+    type notificationOriginator = 'TABNODE' | 'USER';
     enum ENUM_notificationTopic {
         LIKE = "LIKE",
         COMMENT = "COMMENT",
@@ -547,7 +559,7 @@ export declare namespace MUserSocialLink {
     interface DUserSocialLink {
         user: MUser.SUser;
         socialLink: string;
-        type: "WEB" | "TWITTER" | "INSTAGRAM" | "LINKEDIN" | "GITHUB";
+        type: 'WEB' | 'TWITTER' | 'INSTAGRAM' | 'LINKEDIN' | 'GITHUB';
         createdAt: Date;
         updatedAt: Date;
     }
@@ -558,15 +570,15 @@ export declare namespace MUserSocialLink {
 }
 /** For the articles distribution */
 export declare namespace MArticleDistribution {
-    type trackOrderType = "DATE_ASC" | "DATE_DESC";
+    type trackOrderType = 'DATE_ASC' | 'DATE_DESC';
     enum enum_trackOrderType {
         DATE_ASC = "DATE_ASC",
         DATE_DESC = "DATE_DESC"
     }
     enum enum_articlePhase {
-        "PHASE_1" = 10,
-        "PHASE_2" = 30,
-        "PHASE_3" = 60
+        'PHASE_1' = 10,
+        'PHASE_2' = 30,
+        'PHASE_3' = 60
     }
     interface DArticleDistribution {
         phase: number;

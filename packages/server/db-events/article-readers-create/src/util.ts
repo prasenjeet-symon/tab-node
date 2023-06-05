@@ -270,7 +270,7 @@ export async function addNewActivityForUser(aReader: MArticleReader.IArticleRead
   const activity: MUserActivity.IUserActivity = {
     id: v4(),
     doc: {
-      action: 'CREATE',
+      action: 'READ',
       article: aReader.doc.article,
       createdAt: new Date(),
       updatedAt: new Date(),

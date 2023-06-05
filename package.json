@@ -3,7 +3,6 @@
   "private": true,
   "workspaces": [
     "packages/server/db-events/*",
-    "packages/client/*",
     "packages/shared/*"
   ],
   "devDependencies": {
@@ -11,6 +10,8 @@
   },
   "scripts": {
     "setup": "npx lerna bootstrap",
-    "utilsWatch": "npx lerna exec npm run watch --scope=@tabnode/utils"
+    "utilsWatch": "npx lerna exec npm run watch --scope=@tabnode/utils",
+    "nodeUtilsWatch": "npx lerna exec npm run watch --scope=@tabnode/node-utils",
+    "clientWatch": "npx lerna exec npm run dev --scope=@tabnode/webclient"
   }
 }

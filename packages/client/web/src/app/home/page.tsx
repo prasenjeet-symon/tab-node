@@ -10,9 +10,9 @@ import AppwriteDatabase from '../database/appwrite-database';
 
 export default function HomePage() {
   useEffect(()=>{
-     new AppwriteDatabase().fetchLoginUser().then((data)=>{
-      console.log(data, 'USER DDD')
-     })
+    //  new AppwriteDatabase().fetchLoginUser().then((data)=>{
+    //   console.log(data, 'USER DDD')
+    //  })
   }, []);
 
   return (

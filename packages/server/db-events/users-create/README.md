@@ -6,3 +6,4 @@
 
 - [x] Create new welcome notification for the user.
 - [] Use sendgrid to send new welcome email for the user.
+- [x] Add new activity for the event creator

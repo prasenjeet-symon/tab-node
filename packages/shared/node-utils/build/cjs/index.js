@@ -1,5 +1,7 @@
 'use strict';
 
+var nodeAppwrite = require('node-appwrite');
+
 // Appwrite collections
 class AppwriteCollection {
     static USERS = 'USERS';
@@ -33,32 +35,32 @@ class AppwriteCollection {
  * For the article likes
  *
  */
-exports.MArticleLike = void 0;
+var MArticleLike;
 (function (MArticleLike) {
     (function (ENUM_likesStatus) {
         ENUM_likesStatus["LIKED"] = "LIKED";
         ENUM_likesStatus["DISLIKED"] = "DISLIKED";
     })(MArticleLike.ENUM_likesStatus || (MArticleLike.ENUM_likesStatus = {}));
-})(exports.MArticleLike || (exports.MArticleLike = {}));
+})(MArticleLike || (MArticleLike = {}));
 /**
  *
  * For the badge challenges
  *
  */
-exports.MBadgeChallenge = void 0;
+var MBadgeChallenge;
 (function (MBadgeChallenge) {
     (function (ENUM_badgeStatus) {
         ENUM_badgeStatus["PENDING"] = "PENDING";
         ENUM_badgeStatus["COMPLETED"] = "COMPLETED";
         ENUM_badgeStatus["FAILED"] = "FAILED";
     })(MBadgeChallenge.ENUM_badgeStatus || (MBadgeChallenge.ENUM_badgeStatus = {}));
-})(exports.MBadgeChallenge || (exports.MBadgeChallenge = {}));
+})(MBadgeChallenge || (MBadgeChallenge = {}));
 /**
  *
  * For the user activity
  *
  */
-exports.MUserActivity = void 0;
+var MUserActivity;
 (function (MUserActivity) {
     (function (ENUM_activityAction) {
         ENUM_activityAction["LIKE"] = "LIKE";
@@ -69,13 +71,13 @@ exports.MUserActivity = void 0;
         ENUM_activityAction["DISLIKE"] = "DISLIKE";
         ENUM_activityAction["JOINED"] = "JOINED";
     })(MUserActivity.ENUM_activityAction || (MUserActivity.ENUM_activityAction = {}));
-})(exports.MUserActivity || (exports.MUserActivity = {}));
+})(MUserActivity || (MUserActivity = {}));
 /**
  *
  * For the user notification
  *
  */
-exports.MUserNotification = void 0;
+var MUserNotification;
 (function (MUserNotification) {
     (function (ENUM_notificationTopic) {
         ENUM_notificationTopic["LIKE"] = "LIKE";
@@ -84,9 +86,9 @@ exports.MUserNotification = void 0;
         ENUM_notificationTopic["MENTION"] = "MENTION";
         ENUM_notificationTopic["GENERAL"] = "GENERAL";
     })(MUserNotification.ENUM_notificationTopic || (MUserNotification.ENUM_notificationTopic = {}));
-})(exports.MUserNotification || (exports.MUserNotification = {}));
+})(MUserNotification || (MUserNotification = {}));
 /** For the articles distribution */
-exports.MArticleDistribution = void 0;
+var MArticleDistribution;
 (function (MArticleDistribution) {
     (function (enum_trackOrderType) {
         enum_trackOrderType["DATE_ASC"] = "DATE_ASC";
@@ -97,28 +99,7 @@ exports.MArticleDistribution = void 0;
         enum_articlePhase[enum_articlePhase["PHASE_2"] = 30] = "PHASE_2";
         enum_articlePhase[enum_articlePhase["PHASE_3"] = 60] = "PHASE_3";
     })(MArticleDistribution.enum_articlePhase || (MArticleDistribution.enum_articlePhase = {}));
-})(exports.MArticleDistribution || (exports.MArticleDistribution = {}));
-
-class ArticleBoostPoints {
-    static like = 1;
-    static dislike = -2;
-    static comment = 5;
-    static read = 6;
-    static click = 1;
-    static share = 3;
-    static save = 5;
-    static create = 10;
-}
-class UserBoostPoints {
-    static read = 5;
-    static click = 1;
-    static like = 2;
-    static dislike = 2;
-    static comment = 5;
-    static share = 3;
-    static save = 5;
-    static create = 10;
-}
+})(MArticleDistribution || (MArticleDistribution = {}));
 
 /** Is pure JSON Object */
 function isPureJSONObject(value) {
@@ -162,52 +143,98 @@ function deserializeAppwriteData(serializedData) {
     const finalData = { id: serializedData['$id'], doc: result };
     return finalData;
 }
-/** Generate the new unique avatar*/
-function generateAvatar(email) {
-    return `https://robohash.org/${email}.png`;
-}
-/** Appwrite nodejs error reporting */
-/** Central Appwrite Error Reporting */
-/** Get the different threshold for different phase boost point */
-function getThreshold(phase, users) {
-    const mainUser = Math.floor((users * 15) / 100); // 15 percentage of user did some actions
-    const boostPoint = mainUser * (ArticleBoostPoints.click + ArticleBoostPoints.comment + ArticleBoostPoints.like + ArticleBoostPoints.read + ArticleBoostPoints.share);
-    return { impressionCountPercent: 70, boostPoint: Math.floor(boostPoint) };
-}
 /** Get total number of users for the AB testing */
 function getUsersCountForArticleSuggestion(phase, totalUsers) {
     switch (phase) {
         case 1:
-            return Math.floor((exports.MArticleDistribution.enum_articlePhase.PHASE_1 * totalUsers) / 100);
+            return Math.floor((MArticleDistribution.enum_articlePhase.PHASE_1 * totalUsers) / 100);
         case 2:
-            return Math.floor((exports.MArticleDistribution.enum_articlePhase.PHASE_2 * totalUsers) / 100);
+            return Math.floor((MArticleDistribution.enum_articlePhase.PHASE_2 * totalUsers) / 100);
         case 3:
-            return Math.floor((exports.MArticleDistribution.enum_articlePhase.PHASE_3 * totalUsers) / 100);
-        default:
-            return 0;
-    }
-}
-/** Get the phase users in percentage for the AB testing  */
-function getPhaseUsersPercentage(phase) {
-    switch (phase) {
-        case 1:
-            return exports.MArticleDistribution.enum_articlePhase.PHASE_1;
-        case 2:
-            return exports.MArticleDistribution.enum_articlePhase.PHASE_2;
-        case 3:
-            return exports.MArticleDistribution.enum_articlePhase.PHASE_3;
+            return Math.floor((MArticleDistribution.enum_articlePhase.PHASE_3 * totalUsers) / 100);
         default:
             return 0;
     }
 }
 
-exports.AppwriteCollection = AppwriteCollection;
-exports.ArticleBoostPoints = ArticleBoostPoints;
-exports.UserBoostPoints = UserBoostPoints;
-exports.deserializeAppwriteData = deserializeAppwriteData;
-exports.generateAvatar = generateAvatar;
-exports.getPhaseUsersPercentage = getPhaseUsersPercentage;
-exports.getThreshold = getThreshold;
-exports.getUsersCountForArticleSuggestion = getUsersCountForArticleSuggestion;
-exports.serializeAppwriteData = serializeAppwriteData;
-//# sourceMappingURL=index.js.map
+/** Init the nodejs appwrite client */
+class AppwriteNodeJsClient {
+    client;
+    databaseInstance;
+    constructor() {
+        this.client = new nodeAppwrite.Client();
+        // set the config
+        this.client
+            .setEndpoint(process.env.APPWRITE_ENDPOINT || '') // Your API Endpoint
+            .setProject(process.env.APPWRITE_PROJECT_ID || '') // Your project ID
+            .setKey(process.env.APPWRITE_API_KEY || ''); // Your secret API key
+    }
+    database() {
+        this.databaseInstance = new nodeAppwrite.Databases(this.client);
+        return this.databaseInstance;
+    }
+    databaseID() {
+        return process.env.APPWRITE_DATABASE_ID || '';
+    }
+}
+class AppwriteErrorReporterNodeJs {
+    static report(error) {
+        if (error instanceof nodeAppwrite.AppwriteException) {
+            // Handle the error as an AppwriteException
+            console.error('AppwriteExceptionReport:', error.message);
+        }
+        else {
+            // Handle other types of errors
+            console.error('Other error:', error);
+        }
+    }
+    static isDocumentNotFound(error) {
+        if (error instanceof nodeAppwrite.AppwriteException) {
+            return error.code === 404;
+        }
+        else {
+            return false;
+        }
+    }
+}
+async function fetchFullTopic(topicID, database, databaseID) {
+    try {
+        const snap = await database.getDocument(databaseID, AppwriteCollection.TOPICS, topicID);
+        return deserializeAppwriteData(snap);
+    }
+    catch (error) {
+        AppwriteErrorReporterNodeJs.report(error);
+        if (AppwriteErrorReporterNodeJs.isDocumentNotFound(error))
+            return null;
+        return null;
+    }
+}
+/** Fetch all users related to given topic */
+async function fetchAllUserRelatedToTopic(phase, topic, lastUserID, sortType, database, databaseID) {
+    const limit = getUsersCountForArticleSuggestion(phase, topic.doc.associatedUsersCount);
+    const snap = await database.listDocuments(databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, [
+        nodeAppwrite.Query.equal('topic_docID', topic.id),
+        sortType === 'DATE_ASC' ? nodeAppwrite.Query.orderAsc('createdAt') : nodeAppwrite.Query.orderDesc('createdAt'),
+        lastUserID === 'undefined' ? '' : nodeAppwrite.Query.cursorAfter(lastUserID),
+        nodeAppwrite.Query.limit(+limit),
+    ]);
+    const finalData = snap.documents.map((p) => {
+        return deserializeAppwriteData(p);
+    });
+    return { topic: topic, users: finalData.map((p) => p.doc.user), oldLastUserID: lastUserID };
+}
+/** Create new article suggestion if possible  */
+async function createArticleRelationSuggestion(aRSuggestion, database, databaseID) {
+    await database.createDocument(databaseID, AppwriteCollection.USER_ARTICLE_SUGGESTIONS, aRSuggestion.id, serializeAppwriteData(aRSuggestion), [
+        nodeAppwrite.Permission.write(nodeAppwrite.Role.user(aRSuggestion.doc.for.docID)),
+        nodeAppwrite.Permission.delete(nodeAppwrite.Role.user(aRSuggestion.doc.for.docID)),
+        nodeAppwrite.Permission.update(nodeAppwrite.Role.user(aRSuggestion.doc.for.docID)),
+        nodeAppwrite.Permission.read(nodeAppwrite.Role.user(aRSuggestion.doc.for.docID)),
+    ]);
+}
+
+exports.AppwriteErrorReporterNodeJs = AppwriteErrorReporterNodeJs;
+exports.AppwriteNodeJsClient = AppwriteNodeJsClient;
+exports.createArticleRelationSuggestion = createArticleRelationSuggestion;
+exports.fetchAllUserRelatedToTopic = fetchAllUserRelatedToTopic;
+exports.fetchFullTopic = fetchFullTopic;

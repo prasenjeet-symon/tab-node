@@ -2,7 +2,6 @@
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "packages": [
     "packages/server/db-events/*",
-    "packages/client/*",
     "packages/shared/*"
   ],
   "useWorkspaces": true,

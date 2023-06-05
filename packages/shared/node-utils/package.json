@@ -1,5 +1,5 @@
 {
-  "name": "@tabnode/utils",
+  "name": "@tabnode/node-utils",
   "version": "1.0.0",
   "description": "Utils functions for the tabNode",
   "author": "prasenjeet simon",
@@ -27,5 +27,8 @@
     "rollup": "^3.23.0",
     "rollup-plugin-typescript2": "^0.34.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-appwrite": "^9.0.0",
+    "@tabnode/utils": "^1.0.0"
+  }
 }

@@ -308,7 +308,7 @@ export async function addNewActivityForUser(aComment: MArticleComment.IArticleCo
   const activity: MUserActivity.IUserActivity = {
     id: v4(),
     doc: {
-      action: 'CREATE',
+      action: 'COMMENT',
       article: aComment.doc.article,
       createdAt: new Date(),
       updatedAt: new Date(),
