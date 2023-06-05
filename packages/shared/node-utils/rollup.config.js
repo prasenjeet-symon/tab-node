@@ -6,7 +6,7 @@ export default async function () {
 
   builds.push({
     plugins: [typescript(), nodeResolve()],
-    external: [],
+    external: ['node-appwrite'],
     input: ['lib/index.ts'],
     output: [
       {
@@ -14,14 +14,12 @@ export default async function () {
         format: 'esm',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        sourcemap: true,
       },
       {
         dir: 'build/cjs/',
         format: 'cjs',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        sourcemap: true,
       },
     ],
   });

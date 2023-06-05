@@ -313,7 +313,7 @@ export async function addNewActivityForUser(aLike: MArticleLike.IArticleLike) {
   const activity: MUserActivity.IUserActivity = {
     id: v4(),
     doc: {
-      action: 'CREATE',
+      action: aLike.doc.status === 'LIKED' ? 'LIKE' : 'DISLIKE',
       article: aLike.doc.article,
       createdAt: new Date(),
       updatedAt: new Date(),

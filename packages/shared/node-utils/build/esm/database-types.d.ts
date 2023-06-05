@@ -86,7 +86,6 @@ export declare namespace MTopic {
         id: string;
         doc: DTopic;
         isSelected?: boolean;
-        ofNetwork?: boolean;
     }
     export {};
 }

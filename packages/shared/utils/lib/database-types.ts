@@ -1,30 +1,30 @@
 // Appwrite collections
 export abstract class AppwriteCollection {
-  public static readonly USERS = "USERS";
-  public static readonly BADGES = "BADGES";
-  public static readonly TOPICS = "TOPICS";
-  public static readonly ARTICLES = "ARTICLES";
-  public static readonly COMMENTS = "COMMENTS";
-  public static readonly LIKES = "LIKES";
-  public static readonly ADDRESSES = "ADDRESSES";
-  public static readonly SAVED_ARTICLES = "SAVED_ARTICLES";
-  public static readonly ARTICLE_READERS = "ARTICLE_READERS";
-  public static readonly BADGE_CHALLENGES = "BADGE_CHALLENGES";
-  public static readonly USER_RELATIONSHIPS = "USER_RELATIONSHIPS";
-  public static readonly USER_TOPIC_RELATIONSHIPS = "USER_TOPIC_RELATIONSHIPS";
-  public static readonly ARTICLE_TOPIC_RELATIONSHIPS = "ARTICLE_TOPIC_RELATIONSHIPS";
-  public static readonly USER_RELATION_SUGGESTIONS = "USER_RELATION_SUGGESTIONS";
-  public static readonly USER_ARTICLE_SUGGESTIONS = "USER_ARTICLE_SUGGESTIONS";
-  public static readonly USER_ACTIVITIES = "USER_ACTIVITIES";
-  public static readonly USER_NOTIFICATIONS = "USER_NOTIFICATIONS";
-  public static readonly SPONSORS = "SPONSORS";
-  public static readonly DRAFTED_ARTICLES = "DRAFTED_ARTICLES";
-  public static readonly TRANSACTIONS = "TRANSACTIONS";
-  public static readonly ARTICLE_STORIES = "ARTICLE_STORIES";
-  public static readonly ARTICLE_SERIES = "ARTICLE_SERIES";
-  public static readonly ARTICLE_STORIES_DISTRIBUTION = "ARTICLE_STORIES_DISTRIBUTION";
-  public static readonly USER_SOCIAL_LINKS = "USER_SOCIAL_LINKS";
-  public static readonly ARTICLES_DISTRIBUTION = "ARTICLES_DISTRIBUTION";
+  public static readonly USERS = 'USERS';
+  public static readonly BADGES = 'BADGES';
+  public static readonly TOPICS = 'TOPICS';
+  public static readonly ARTICLES = 'ARTICLES';
+  public static readonly COMMENTS = 'COMMENTS';
+  public static readonly LIKES = 'LIKES';
+  public static readonly ADDRESSES = 'ADDRESSES';
+  public static readonly SAVED_ARTICLES = 'SAVED_ARTICLES';
+  public static readonly ARTICLE_READERS = 'ARTICLE_READERS';
+  public static readonly BADGE_CHALLENGES = 'BADGE_CHALLENGES';
+  public static readonly USER_RELATIONSHIPS = 'USER_RELATIONSHIPS';
+  public static readonly USER_TOPIC_RELATIONSHIPS = 'USER_TOPIC_RELATIONSHIPS';
+  public static readonly ARTICLE_TOPIC_RELATIONSHIPS = 'ARTICLE_TOPIC_RELATIONSHIPS';
+  public static readonly USER_RELATION_SUGGESTIONS = 'USER_RELATION_SUGGESTIONS';
+  public static readonly USER_ARTICLE_SUGGESTIONS = 'USER_ARTICLE_SUGGESTIONS';
+  public static readonly USER_ACTIVITIES = 'USER_ACTIVITIES';
+  public static readonly USER_NOTIFICATIONS = 'USER_NOTIFICATIONS';
+  public static readonly SPONSORS = 'SPONSORS';
+  public static readonly DRAFTED_ARTICLES = 'DRAFTED_ARTICLES';
+  public static readonly TRANSACTIONS = 'TRANSACTIONS';
+  public static readonly ARTICLE_STORIES = 'ARTICLE_STORIES';
+  public static readonly ARTICLE_SERIES = 'ARTICLE_SERIES';
+  public static readonly ARTICLE_STORIES_DISTRIBUTION = 'ARTICLE_STORIES_DISTRIBUTION';
+  public static readonly USER_SOCIAL_LINKS = 'USER_SOCIAL_LINKS';
+  public static readonly ARTICLES_DISTRIBUTION = 'ARTICLES_DISTRIBUTION';
 }
 /**
  *
@@ -92,6 +92,8 @@ export namespace MTopic {
   export interface ITopic {
     id: string;
     doc: DTopic;
+    isSelected?: boolean;
+    ofNetwork?: boolean;
   }
 }
 /**
@@ -214,6 +216,7 @@ export namespace MArticle {
     writer: MUser.SUser;
     readTimeInMin: number; // FloatField
     articleSeries: MArticleSeries.SArticleSeries | null;
+    canPublishStory: boolean;
   }
 
   export interface IArticle {
@@ -252,10 +255,10 @@ export namespace MArticleComment {
  *
  */
 export namespace MArticleLike {
-  export type likesStatus = "LIKED" | "DISLIKED";
+  export type likesStatus = 'LIKED' | 'DISLIKED';
   export enum ENUM_likesStatus {
-    LIKED = "LIKED",
-    DISLIKED = "DISLIKED",
+    LIKED = 'LIKED',
+    DISLIKED = 'DISLIKED',
   }
 
   export interface DArticleLike {
@@ -318,11 +321,11 @@ export namespace MArticleReader {
  *
  */
 export namespace MBadgeChallenge {
-  export type badgeStatus = "PENDING" | "COMPLETED" | "FAILED";
+  export type badgeStatus = 'PENDING' | 'COMPLETED' | 'FAILED';
   export enum ENUM_badgeStatus {
-    PENDING = "PENDING",
-    COMPLETED = "COMPLETED",
-    FAILED = "FAILED",
+    PENDING = 'PENDING',
+    COMPLETED = 'COMPLETED',
+    FAILED = 'FAILED',
   }
 
   export interface DBadgeChallenge {
@@ -459,7 +462,16 @@ export namespace MArticleRelationSuggestion {
  *
  */
 export namespace MUserActivity {
-  type activityAction = "LIKE" | "READ" | "COMMENT" | "SAVE" | "CREATE" | "DISLIKE";
+  type activityAction = 'LIKE' | 'READ' | 'COMMENT' | 'SAVE' | 'CREATE' | 'DISLIKE' | 'JOINED';
+  export enum ENUM_activityAction {
+    LIKE = 'LIKE',
+    READ = 'READ',
+    COMMENT = 'COMMENT',
+    SAVE = 'SAVE',
+    CREATE = 'CREATE',
+    DISLIKE = 'DISLIKE',
+    JOINED = 'JOINED',
+  }
 
   export interface DUserActivity {
     user: MUser.SUser;
@@ -480,14 +492,14 @@ export namespace MUserActivity {
  *
  */
 export namespace MUserNotification {
-  export type notificationTopic = "LIKE" | "COMMENT" | "FOLLOW" | "MENTION" | "GENERAL";
-  export type notificationOriginator = "TABNODE" | "USER";
+  export type notificationTopic = 'LIKE' | 'COMMENT' | 'FOLLOW' | 'MENTION' | 'GENERAL';
+  export type notificationOriginator = 'TABNODE' | 'USER';
   export enum ENUM_notificationTopic {
-    LIKE = "LIKE",
-    COMMENT = "COMMENT",
-    FOLLOW = "FOLLOW",
-    MENTION = "MENTION",
-    GENERAL = "GENERAL",
+    LIKE = 'LIKE',
+    COMMENT = 'COMMENT',
+    FOLLOW = 'FOLLOW',
+    MENTION = 'MENTION',
+    GENERAL = 'GENERAL',
   }
 
   export interface SOriginator {
@@ -588,7 +600,7 @@ export namespace MUserSocialLink {
   export interface DUserSocialLink {
     user: MUser.SUser;
     socialLink: string; // URL max  length of 255
-    type: "WEB" | "TWITTER" | "INSTAGRAM" | "LINKEDIN" | "GITHUB";
+    type: 'WEB' | 'TWITTER' | 'INSTAGRAM' | 'LINKEDIN' | 'GITHUB';
     createdAt: Date;
     updatedAt: Date;
   }
@@ -601,16 +613,16 @@ export namespace MUserSocialLink {
 
 /** For the articles distribution */
 export namespace MArticleDistribution {
-  export type trackOrderType = "DATE_ASC" | "DATE_DESC";
+  export type trackOrderType = 'DATE_ASC' | 'DATE_DESC';
   export enum enum_trackOrderType {
-    DATE_ASC = "DATE_ASC",
-    DATE_DESC = "DATE_DESC",
+    DATE_ASC = 'DATE_ASC',
+    DATE_DESC = 'DATE_DESC',
   }
 
   export enum enum_articlePhase {
-    "PHASE_1" = 10,
-    "PHASE_2" = 30,
-    "PHASE_3" = 60,
+    'PHASE_1' = 10,
+    'PHASE_2' = 30,
+    'PHASE_3' = 60,
   }
   export interface DArticleDistribution {
     phase: number; // like 1, 2, 3, ...
