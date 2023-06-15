@@ -24,27 +24,12 @@ export class SetUp {
         const collections1 = this.databases.createCollection(this.databaseID, AppwriteCollection.ADDRESSES, AppwriteCollection.ADDRESSES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections2 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLES, AppwriteCollection.ARTICLES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections3 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, AppwriteCollection.ARTICLES_DISTRIBUTION, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
-        const collections4 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION_CLONE, AppwriteCollection.ARTICLES_DISTRIBUTION_CLONE, [
-            Permission.read(Role.any()),
-            Permission.write(Role.users()),
-            Permission.delete(Role.users()),
-            Permission.update(Role.users()),
-        ]);
+        const collections4 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION_CLONE, AppwriteCollection.ARTICLES_DISTRIBUTION_CLONE, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users()), Permission.read(Role.users())]);
         const collections5 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_READERS, AppwriteCollection.ARTICLE_READERS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections6 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_SERIES, AppwriteCollection.ARTICLE_SERIES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections7 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_STORIES, AppwriteCollection.ARTICLE_STORIES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
-        const collections8 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_STORIES_DISTRIBUTION, AppwriteCollection.ARTICLE_STORIES_DISTRIBUTION, [
-            Permission.read(Role.any()),
-            Permission.write(Role.users()),
-            Permission.delete(Role.users()),
-            Permission.update(Role.users()),
-        ]);
-        const collections9 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, [
-            Permission.read(Role.any()),
-            Permission.write(Role.users()),
-            Permission.delete(Role.users()),
-            Permission.update(Role.users()),
-        ]);
+        const collections8 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_STORIES_DISTRIBUTION, AppwriteCollection.ARTICLE_STORIES_DISTRIBUTION, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users()), Permission.read(Role.users())]);
+        const collections9 = this.databases.createCollection(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections10 = this.databases.createCollection(this.databaseID, AppwriteCollection.BADGES, AppwriteCollection.BADGES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections11 = this.databases.createCollection(this.databaseID, AppwriteCollection.BADGE_CHALLENGES, AppwriteCollection.BADGE_CHALLENGES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections12 = this.databases.createCollection(this.databaseID, AppwriteCollection.COMMENTS, AppwriteCollection.COMMENTS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
@@ -57,12 +42,7 @@ export class SetUp {
         const collections19 = this.databases.createCollection(this.databaseID, AppwriteCollection.USERS, AppwriteCollection.USERS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections20 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_ACTIVITIES, AppwriteCollection.USER_ACTIVITIES, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections21 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_ARTICLE_SUGGESTIONS, AppwriteCollection.USER_ARTICLE_SUGGESTIONS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
-        const collections22 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_ARTICLE_SUGGESTIONS_COPY, AppwriteCollection.USER_ARTICLE_SUGGESTIONS_COPY, [
-            Permission.read(Role.any()),
-            Permission.write(Role.users()),
-            Permission.delete(Role.users()),
-            Permission.update(Role.users()),
-        ]);
+        const collections22 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_ARTICLE_SUGGESTIONS_COPY, AppwriteCollection.USER_ARTICLE_SUGGESTIONS_COPY, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections23 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_NOTIFICATIONS, AppwriteCollection.USER_NOTIFICATIONS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections24 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, AppwriteCollection.USER_RELATIONSHIPS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
         const collections25 = this.databases.createCollection(this.databaseID, AppwriteCollection.USER_RELATION_SUGGESTIONS, AppwriteCollection.USER_RELATION_SUGGESTIONS, [Permission.read(Role.any()), Permission.write(Role.users()), Permission.delete(Role.users()), Permission.update(Role.users())]);
@@ -396,7 +376,7 @@ export class SetUp {
             }
           */
         // article_title: string , max 30 , true
-        const prop8 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.COMMENTS, 'article_title', 30, true);
+        const prop8 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.COMMENTS, 'article_title', 255, true);
         // article_docID: string , max 36 , true
         const prop9 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.COMMENTS, 'article_docID', 36, true);
         // writer: MUser.SUser , false
@@ -461,7 +441,7 @@ export class SetUp {
         }
         */
         // article_title: string , max 30 , true
-        const prop5 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.LIKES, 'article_title', 30, true);
+        const prop5 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.LIKES, 'article_title', 255, true);
         // article_docID: string , max 36 , true
         const prop6 = this.databases.createStringAttribute(this.databaseID, AppwriteCollection.LIKES, 'article_docID', 36, true);
         // createdAt : Date , true
@@ -1538,6 +1518,8 @@ export class SetUp {
         await this.createMArticleReader();
     }
 
+    
+
     /** Create index */
     public async createIndex() {
         // collection : USER_TOPIC_RELATIONSHIPS , attr : [user_docID] , order : [asc]
@@ -1746,47 +1728,7 @@ export class SetUp {
             indx45,
             indx46,
         ]);
-        await Promise.allSettled([
-            indx47,
-            indx48,
-            indx49,
-            indx50,
-            indx51,
-            indx52,
-            indx53,
-            indx54,
-            indx55,
-            indx56,
-            indx57,
-            indx58,
-            indx59,
-            indx60,
-            indx61,
-            indx62,
-            indx63,
-            indx64,
-            indx65,
-            indx66,
-            indx67,
-            indx68,
-            indx69,
-            indx70,
-            indx71,
-            indx72,
-            indx73,
-            indx74,
-            indx75,
-            indx76,
-            indx77,
-            indx78,
-            indx79,
-            indx80,
-            indx81,
-            indx82,
-            indx83,
-            indx84,
-            indx85,
-        ]);
+        await Promise.allSettled([indx47, indx48, indx49, indx50, indx51, indx52, indx53, indx54, indx55, indx56, indx57, indx58, indx59, indx60, indx61, indx62, indx63, indx64, indx65, indx66, indx67, indx68, indx69, indx70, indx71, indx72, indx73, indx74, indx75, indx76, indx77, indx78, indx79, indx80, indx81, indx82, indx83, indx84, indx85]);
     }
 
     private async isDatabaseEXIT() {
@@ -1799,23 +1741,7 @@ export class SetUp {
     }
 
     public async createInitialTopics() {
-        const topics = [
-            'Programming languages',
-            'Web development',
-            'Mobile app development',
-            'Artificial intelligence',
-            'Machine learning',
-            'Data analysis',
-            'Big data',
-            'Cloud computing',
-            'DevOps',
-            'Internet of Things (IoT)',
-            'Cybersecurity',
-            'Blockchain',
-            'Virtual and augmented reality',
-            'Robotics',
-            '3D printing',
-        ];
+        const topics = ['Programming languages', 'Web development', 'Mobile app development', 'Artificial intelligence', 'Machine learning', 'Data analysis', 'Big data', 'Cloud computing', 'DevOps', 'Internet of Things (IoT)', 'Cybersecurity', 'Blockchain', 'Virtual and augmented reality', 'Robotics', '3D printing'];
         const topicsToAdd = topics.map(async (t) => {
             const topicD: MTopic.ITopic = {
                 id: this.client.uniqueID(),
