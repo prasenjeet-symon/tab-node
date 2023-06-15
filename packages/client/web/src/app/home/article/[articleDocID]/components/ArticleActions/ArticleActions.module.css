@@ -1,0 +1,24 @@
+.actions {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 0px 100px 100px 0px;
+    z-index: +10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actions button {
+    padding: 10px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

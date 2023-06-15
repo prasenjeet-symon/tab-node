@@ -1,12 +1,14 @@
-import { MArticleDistribution, MArticleRelationSuggestion, MTopic } from '@tabnode/utils';
+import { AWFunction, MArticleDistribution, MArticleRelationSuggestion, MTopic } from '@tabnode/utils';
 import { Databases } from 'node-appwrite';
 /** Init the nodejs appwrite client */
 export declare class AppwriteNodeJsClient {
     private client;
     private databaseInstance;
-    constructor();
+    private req;
+    constructor(req: AWFunction.Req);
     database(): Databases;
     databaseID(): string;
+    uniqueID(): any;
 }
 export declare abstract class AppwriteErrorReporterNodeJs {
     static report(error: any): void;

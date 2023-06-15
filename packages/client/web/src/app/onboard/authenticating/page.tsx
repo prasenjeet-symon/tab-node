@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import Appwrite from '../../appwrite';
+import styles from './Authenticating.module.css';
 
 /** Authenticating Page */
 async function authenticate(router: AppRouterInstance) {
@@ -56,7 +57,6 @@ async function authenticate(router: AppRouterInstance) {
     // there is document associated for this user
     // check if the user has topics
     const userTopics = await appwrite.fetchTopics(loggedInUser.id);
-    console.log(userTopics);
     if (userTopics.length === 0) {
       // redirect to topic chooser page
       router.push('/onboard/interests');
@@ -74,5 +74,5 @@ export default function AuthenticatingPage() {
     authenticate(router);
   }, []);
 
-  return <section> Authenticating... </section>;
+  return <section className={styles.authenticate}> Authenticating... </section>;
 }

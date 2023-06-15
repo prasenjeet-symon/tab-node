@@ -1,4 +1,4 @@
-import { Client, Databases, AppwriteException, Query, Permission, Role } from 'node-appwrite';
+import { AppwriteException, Query, Permission, Role } from 'node-appwrite';
 
 // Appwrite collections
 class AppwriteCollection {
@@ -17,6 +17,7 @@ class AppwriteCollection {
     static ARTICLE_TOPIC_RELATIONSHIPS = 'ARTICLE_TOPIC_RELATIONSHIPS';
     static USER_RELATION_SUGGESTIONS = 'USER_RELATION_SUGGESTIONS';
     static USER_ARTICLE_SUGGESTIONS = 'USER_ARTICLE_SUGGESTIONS';
+    static USER_ARTICLE_SUGGESTIONS_COPY = 'USER_ARTICLE_SUGGESTIONS_COPY';
     static USER_ACTIVITIES = 'USER_ACTIVITIES';
     static USER_NOTIFICATIONS = 'USER_NOTIFICATIONS';
     static SPONSORS = 'SPONSORS';
@@ -27,6 +28,7 @@ class AppwriteCollection {
     static ARTICLE_STORIES_DISTRIBUTION = 'ARTICLE_STORIES_DISTRIBUTION';
     static USER_SOCIAL_LINKS = 'USER_SOCIAL_LINKS';
     static ARTICLES_DISTRIBUTION = 'ARTICLES_DISTRIBUTION';
+    static ARTICLES_DISTRIBUTION_CLONE = 'ARTICLES_DISTRIBUTION_CLONE';
 }
 /**
  *
@@ -105,6 +107,14 @@ function isPureJSONObject(value) {
 }
 /** Convert the data to appwrite  */
 function serializeAppwriteData(data, keyStr = '') {
+    // remove $attribute from the data
+    const newData = {};
+    Object.keys(data).forEach((p) => {
+        if (!/\$/.test(p)) {
+            newData[p] = data[p];
+        }
+    });
+    data = newData;
     const result = {};
     for (const key of Object.keys(data)) {
         const value = data[key];
@@ -128,7 +138,7 @@ function deserializeAppwriteData(serializedData) {
         for (let i = 0; i < keys.length; i++) {
             const currentKey = keys[i];
             if (i === keys.length - 1) {
-                currentObj[currentKey] = value;
+                currentObj[currentKey] = isValidDateString(value) ? new Date(value) : value;
             }
             else {
                 if (!currentObj[currentKey] || !isPureJSONObject(currentObj[currentKey])) {
@@ -154,25 +164,35 @@ function getUsersCountForArticleSuggestion(phase, totalUsers) {
             return 0;
     }
 }
+function isValidDateString(dateString) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}$/;
+    return dateRegex.test(dateString);
+}
 
+const sdk = require('node-appwrite');
 /** Init the nodejs appwrite client */
 class AppwriteNodeJsClient {
     client;
     databaseInstance;
-    constructor() {
-        this.client = new Client();
-        // set the config
+    req;
+    constructor(req) {
+        this.req = req;
+        this.client = new sdk.Client();
         this.client
-            .setEndpoint(process.env.APPWRITE_ENDPOINT || '') // Your API Endpoint
-            .setProject(process.env.APPWRITE_PROJECT_ID || '') // Your project ID
-            .setKey(process.env.APPWRITE_API_KEY || ''); // Your secret API key
+            .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT || '') // Your API Endpoint
+            .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID || '') // Your project ID
+            .setKey(req.variables.APPWRITE_FUNCTION_API_KEY || '')
+            .setSelfSigned(true);
     }
     database() {
-        this.databaseInstance = new Databases(this.client);
+        this.databaseInstance = new sdk.Databases(this.client);
         return this.databaseInstance;
     }
     databaseID() {
-        return process.env.APPWRITE_DATABASE_ID || '';
+        return this.req.variables.APPWRITE_DATABASE_ID || '';
+    }
+    uniqueID() {
+        return sdk.ID.unique();
     }
 }
 class AppwriteErrorReporterNodeJs {

@@ -1,12 +1,15 @@
-import typescript from 'rollup-plugin-typescript2';
+const typescript = require('rollup-plugin-typescript2');
+const nodeResolve = require('@rollup/plugin-node-resolve');
 
-export default {
-  input: 'src/index.ts',
-  output: {
-    file: 'dist/index.js',
-    format: 'cjs',
-    sourcemap: true,
-  },
-  external: ["node-appwrite"],
-  plugins: [typescript()],
+module.exports = {
+    input: 'src/index.ts',
+    output: {
+        dir: 'dist',
+        format: 'cjs',
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+        sourcemap: true,
+    },
+    external: ['node-appwrite'],
+    plugins: [typescript(), nodeResolve()],
 };

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+
+.article {
+  border-top: 1px solid var(--border-color);
+  padding: 15px 0px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin-top: 20px;
+}
+
+.article > div:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.article > div:nth-of-type(2) img {
+  width: 80%;
+  height: 80%;
+  border-radius: 5px;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) {
+  display: flex;
+  align-items: center;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center center;
+  margin-right: 10px;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) {
+  flex: 1;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) span:nth-of-type(1) {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) span:nth-of-type(2) {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-left: 10px;
+  color: var(--secondary-text-color);
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 3px;
+  color: var(--secondary-text-color);
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(2) {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin: 10px 0px;
+  font-family: 'Rubik', sans-serif;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(3) {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--secondary-text-color);
+  font-family: 'Roboto', sans-serif;
+}
+
+.article > div:nth-of-type(1) > div:nth-of-type(4) {
+  margin-top: 15px;
+}

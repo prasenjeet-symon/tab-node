@@ -1,0 +1,30 @@
+.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.notFound > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.notFound > div:nth-of-type(1) img {
+    width: 40%;
+    height: auto;
+}
+
+.notFound > div:nth-of-type(2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.notFound > div:nth-of-type(3) {
+    font-size: 0.9rem;
+}

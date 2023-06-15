@@ -1,18 +1,23 @@
 {
     "editor.fontFamily": "'Inconsolata', monospace",
-    "editor.fontSize": 16,
+    "editor.fontSize": 15,
     "editor.fontWeight": "600",
     "editor.minimap.renderCharacters": false,
     "editor.minimap.side": "left",
     "editor.minimap.maxColumn": 50,
     "editor.minimap.scale": 3,
     "cSpell.words": [
+      "Aliwangwang",
       "appwrite",
+      "Datetime",
       "dompurify",
+      "hljs",
+      "linkify",
       "prasenjeet",
       "sendgrid",
       "symon",
       "tabnode",
+      "Twotone",
       "unfollow",
       "webclient"
     ]

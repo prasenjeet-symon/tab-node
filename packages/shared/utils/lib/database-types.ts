@@ -15,6 +15,7 @@ export abstract class AppwriteCollection {
   public static readonly ARTICLE_TOPIC_RELATIONSHIPS = 'ARTICLE_TOPIC_RELATIONSHIPS';
   public static readonly USER_RELATION_SUGGESTIONS = 'USER_RELATION_SUGGESTIONS';
   public static readonly USER_ARTICLE_SUGGESTIONS = 'USER_ARTICLE_SUGGESTIONS';
+  public static readonly USER_ARTICLE_SUGGESTIONS_COPY = 'USER_ARTICLE_SUGGESTIONS_COPY';
   public static readonly USER_ACTIVITIES = 'USER_ACTIVITIES';
   public static readonly USER_NOTIFICATIONS = 'USER_NOTIFICATIONS';
   public static readonly SPONSORS = 'SPONSORS';
@@ -25,6 +26,7 @@ export abstract class AppwriteCollection {
   public static readonly ARTICLE_STORIES_DISTRIBUTION = 'ARTICLE_STORIES_DISTRIBUTION';
   public static readonly USER_SOCIAL_LINKS = 'USER_SOCIAL_LINKS';
   public static readonly ARTICLES_DISTRIBUTION = 'ARTICLES_DISTRIBUTION';
+  public static readonly ARTICLES_DISTRIBUTION_CLONE = 'ARTICLES_DISTRIBUTION_CLONE';
 }
 /**
  *
@@ -222,6 +224,9 @@ export namespace MArticle {
   export interface IArticle {
     id: string;
     doc: DArticle;
+    likesCount?: number;
+    commentsCount?: number;
+    topics?:MTopic.STopic[];
   }
 }
 /**
@@ -308,6 +313,7 @@ export namespace MArticleReader {
     updatedAt: Date;
     readTimeInMin: number; // FloatField
     articleTimeInMin: number; // FloatField
+    isLive: boolean;
   }
 
   export interface IArticleReader {

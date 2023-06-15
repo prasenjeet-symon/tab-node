@@ -1,21 +1,27 @@
-
+import { MUserNotification, getHumanReadableDate } from '@tabnode/utils';
 import { FaComment } from 'react-icons/fa';
-import styles from './Comment.module.css';
 import { GoPrimitiveDot } from 'react-icons/go';
+import styles from './Comment.module.css';
 
-export default function Comment() {
-    return ( <section className={styles.comment}>
-       <div> <span><FaComment/></span> </div>
-      <div>
-         <div> <img src="https://picsum.photos/200/300" alt="" /> </div>
-         <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <span>Velit praesentium voluptatibus non!</span> </div>
-         <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt molestias quae alias, earum rem numquam porro aliquid vero minus dolor ducimus quidem. Vero, totam?
-         </div>
-         <div> 23 Jan 2023 12:00 AM </div>
-      </div>
-      <div>
-        <GoPrimitiveDot/>
-      </div>
-    </section> )
+export default function Comment({ notification }: { notification: MUserNotification.IUserNotification }) {
+    return (
+        <section className={styles.comment}>
+            <div>
+                <span>
+                    <FaComment />
+                </span>
+            </div>
+            <div>
+                <div>
+                    <img src={notification.doc.originator.profilePic} alt="" />
+                </div>
+                <div>{notification.doc.title}</div>
+                <div>{notification.doc.notification}</div>
+                <div> {getHumanReadableDate(notification.doc.createdAt)} </div>
+            </div>
+            <div>
+                <GoPrimitiveDot />
+            </div>
+        </section>
+    );
 }

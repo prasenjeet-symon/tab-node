@@ -14,6 +14,7 @@ export declare abstract class AppwriteCollection {
     static readonly ARTICLE_TOPIC_RELATIONSHIPS = "ARTICLE_TOPIC_RELATIONSHIPS";
     static readonly USER_RELATION_SUGGESTIONS = "USER_RELATION_SUGGESTIONS";
     static readonly USER_ARTICLE_SUGGESTIONS = "USER_ARTICLE_SUGGESTIONS";
+    static readonly USER_ARTICLE_SUGGESTIONS_COPY = "USER_ARTICLE_SUGGESTIONS_COPY";
     static readonly USER_ACTIVITIES = "USER_ACTIVITIES";
     static readonly USER_NOTIFICATIONS = "USER_NOTIFICATIONS";
     static readonly SPONSORS = "SPONSORS";
@@ -24,6 +25,7 @@ export declare abstract class AppwriteCollection {
     static readonly ARTICLE_STORIES_DISTRIBUTION = "ARTICLE_STORIES_DISTRIBUTION";
     static readonly USER_SOCIAL_LINKS = "USER_SOCIAL_LINKS";
     static readonly ARTICLES_DISTRIBUTION = "ARTICLES_DISTRIBUTION";
+    static readonly ARTICLES_DISTRIBUTION_CLONE = "ARTICLES_DISTRIBUTION_CLONE";
 }
 /**
  *
@@ -207,6 +209,9 @@ export declare namespace MArticle {
     interface IArticle {
         id: string;
         doc: DArticle;
+        likesCount?: number;
+        commentsCount?: number;
+        topics?: MTopic.STopic[];
     }
 }
 /**
@@ -287,6 +292,7 @@ export declare namespace MArticleReader {
         updatedAt: Date;
         readTimeInMin: number;
         articleTimeInMin: number;
+        isLive: boolean;
     }
     interface IArticleReader {
         id: string;

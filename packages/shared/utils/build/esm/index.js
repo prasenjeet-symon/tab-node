@@ -15,6 +15,7 @@ class AppwriteCollection {
     static ARTICLE_TOPIC_RELATIONSHIPS = 'ARTICLE_TOPIC_RELATIONSHIPS';
     static USER_RELATION_SUGGESTIONS = 'USER_RELATION_SUGGESTIONS';
     static USER_ARTICLE_SUGGESTIONS = 'USER_ARTICLE_SUGGESTIONS';
+    static USER_ARTICLE_SUGGESTIONS_COPY = 'USER_ARTICLE_SUGGESTIONS_COPY';
     static USER_ACTIVITIES = 'USER_ACTIVITIES';
     static USER_NOTIFICATIONS = 'USER_NOTIFICATIONS';
     static SPONSORS = 'SPONSORS';
@@ -25,6 +26,7 @@ class AppwriteCollection {
     static ARTICLE_STORIES_DISTRIBUTION = 'ARTICLE_STORIES_DISTRIBUTION';
     static USER_SOCIAL_LINKS = 'USER_SOCIAL_LINKS';
     static ARTICLES_DISTRIBUTION = 'ARTICLES_DISTRIBUTION';
+    static ARTICLES_DISTRIBUTION_CLONE = 'ARTICLES_DISTRIBUTION_CLONE';
 }
 /**
  *
@@ -124,6 +126,14 @@ function isPureJSONObject(value) {
 }
 /** Convert the data to appwrite  */
 function serializeAppwriteData(data, keyStr = '') {
+    // remove $attribute from the data
+    const newData = {};
+    Object.keys(data).forEach((p) => {
+        if (!/\$/.test(p)) {
+            newData[p] = data[p];
+        }
+    });
+    data = newData;
     const result = {};
     for (const key of Object.keys(data)) {
         const value = data[key];
@@ -147,7 +157,7 @@ function deserializeAppwriteData(serializedData) {
         for (let i = 0; i < keys.length; i++) {
             const currentKey = keys[i];
             if (i === keys.length - 1) {
-                currentObj[currentKey] = value;
+                currentObj[currentKey] = isValidDateString(value) ? new Date(value) : value;
             }
             else {
                 if (!currentObj[currentKey] || !isPureJSONObject(currentObj[currentKey])) {
@@ -198,6 +208,34 @@ function getPhaseUsersPercentage(phase) {
             return 0;
     }
 }
+function isValidDateString(dateString) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}$/;
+    return dateRegex.test(dateString);
+}
+function getHumanReadableDate(date) {
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - date.getTime()) / 1000); // Get time difference in seconds
+    if (diff < 60) {
+        return `${diff} seconds ago`;
+    }
+    else if (diff < 3600) {
+        const minutes = Math.floor(diff / 60);
+        return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+    }
+    else if (diff < 86400) {
+        const hours = Math.floor(diff / 3600);
+        return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+    }
+    else {
+        const days = Math.floor(diff / 86400);
+        return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+    }
+}
+function calculateReadingTime(content, wordsPerMinute = 200) {
+    const words = content.trim().split(/\s+/).length;
+    const readingTime = Math.ceil(words / wordsPerMinute);
+    return readingTime;
+}
 
-export { AppwriteCollection, ArticleBoostPoints, MArticleDistribution, MArticleLike, MBadgeChallenge, MUserActivity, MUserNotification, UserBoostPoints, deserializeAppwriteData, generateAvatar, getPhaseUsersPercentage, getThreshold, getUsersCountForArticleSuggestion, serializeAppwriteData };
+export { AppwriteCollection, ArticleBoostPoints, MArticleDistribution, MArticleLike, MBadgeChallenge, MUserActivity, MUserNotification, UserBoostPoints, calculateReadingTime, deserializeAppwriteData, generateAvatar, getHumanReadableDate, getPhaseUsersPercentage, getThreshold, getUsersCountForArticleSuggestion, isValidDateString, serializeAppwriteData };
 //# sourceMappingURL=index.js.map

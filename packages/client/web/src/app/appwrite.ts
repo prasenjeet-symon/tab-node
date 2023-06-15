@@ -1,9 +1,10 @@
-import { Account, Client, Databases } from 'appwrite';
+import { Account, Client, Databases, Storage } from 'appwrite';
 
 class Appwrite {
   private static appwrite: Client;
   private static appwriteAccount: Account;
   private static appwriteDatabase: Databases;
+  private static appwriteStorage: Storage;
 
   private static initialize(endpoint: string, project: string) {
     if (!Appwrite.appwrite) {
@@ -47,7 +48,7 @@ class Appwrite {
 
   /** Get the current logged in user  */
   static async currentUser() {
-     return await Appwrite.account().get();
+    return await Appwrite.account().get();
   }
 
   // For the database
@@ -56,6 +57,14 @@ class Appwrite {
       Appwrite.appwriteDatabase = new Databases(Appwrite.client());
     }
     return Appwrite.appwriteDatabase;
+  }
+
+  // for the storage
+  static storage() {
+    if (!Appwrite.appwriteStorage) {
+      Appwrite.appwriteStorage = new Storage(Appwrite.client());
+    }
+    return Appwrite.appwriteStorage;
   }
 }
 

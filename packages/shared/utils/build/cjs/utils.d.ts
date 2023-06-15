@@ -16,4 +16,7 @@ export declare function getThreshold(phase: number, users: number): {
 export declare function getUsersCountForArticleSuggestion(phase: number, totalUsers: number): number;
 /** Get the phase users in percentage for the AB testing  */
 export declare function getPhaseUsersPercentage(phase: number): 0 | MArticleDistribution.enum_articlePhase;
+export declare function isValidDateString(dateString: string): boolean;
+export declare function getHumanReadableDate(date: Date): string;
+export declare function calculateReadingTime(content: string, wordsPerMinute?: number): number;
 //# sourceMappingURL=utils.d.ts.map

@@ -1,19 +1,26 @@
+import { MUserNotification, getHumanReadableDate } from '@tabnode/utils';
 import { FaHeart } from 'react-icons/fa';
-import styles from './Like.module.css';
 import { GoPrimitiveDot } from 'react-icons/go';
+import styles from './Like.module.css';
 
-export default function Like() {
-  return (
-    <section className={styles.like}>
-      <div> <span><FaHeart/></span> </div>
-      <div>
-         <div> <img src="https://picsum.photos/200/300" alt="" /> </div>
-         <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit praesentium voluptatibus non!</div>
-         <div> 23 Jan 2023 02:23 AM </div>
-      </div>
-      <div>
-        <GoPrimitiveDot/>
-      </div>
-    </section>
-  );
+export default function Like({ notification }: { notification: MUserNotification.IUserNotification }) {
+    return (
+        <section className={styles.like}>
+            <div>
+                <span>
+                    <FaHeart />
+                </span>
+            </div>
+            <div>
+                <div>
+                    <img src={notification.doc.originator.profilePic} alt="" />
+                </div>
+                <div>{notification.doc.notification}</div>
+                <div> {getHumanReadableDate(notification.doc.createdAt)} </div>
+            </div>
+            <div>
+                <GoPrimitiveDot />
+            </div>
+        </section>
+    );
 }

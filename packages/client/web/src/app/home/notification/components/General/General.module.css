@@ -1,0 +1,43 @@
+.containerGeneralNotification {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px 10px;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .containerGeneralNotification > div:nth-of-type(1) span {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-background-color);
+    color: red;
+  }
+  
+  .containerGeneralNotification > div:nth-of-type(2) {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .containerGeneralNotification > div:nth-of-type(2) > div:nth-of-type(1) img {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    object-fit: cover;
+    object-position: center center;
+  }
+  
+  .containerGeneralNotification > div:nth-of-type(3) {
+    color: rgb(8, 237, 24);
+  }
+  
+  .containerGeneralNotification > div:nth-of-type(2) > div:nth-of-type(3) {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--secondary-text-color);
+    margin-top: 5px;
+  }
+  

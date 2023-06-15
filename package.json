@@ -1,17 +1,18 @@
 {
   "name": "tabnode",
-  "private": true,
   "workspaces": [
     "packages/server/db-events/*",
     "packages/shared/*"
   ],
   "devDependencies": {
+    "@types/node": "^20.3.0",
     "lerna": "^6.6.2"
   },
   "scripts": {
     "setup": "npx lerna bootstrap",
+    "buildFunctions": "lerna run build --parallel --scope '@tabnode/functions*'",
+    "deployFunctions": "lerna run deploy --parallel --scope '@tabnode/functions*'",
     "utilsWatch": "npx lerna exec npm run watch --scope=@tabnode/utils",
-    "nodeUtilsWatch": "npx lerna exec npm run watch --scope=@tabnode/node-utils",
-    "clientWatch": "npx lerna exec npm run dev --scope=@tabnode/webclient"
+    "nodeUtilsWatch": "npx lerna exec npm run watch --scope=@tabnode/node-utils"
   }
 }
