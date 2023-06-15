@@ -1,0 +1,10 @@
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading img {
+    width: 35px;
+    height: auto;
+}

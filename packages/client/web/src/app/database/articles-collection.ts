@@ -56,17 +56,8 @@ export class ArticlesCollection {
   public async getWrittenArticlesInPublishedMode(userDocID: string, prevCursor: MArticle.IArticle | undefined, limit: number): Promise<MArticle.IArticle[]> {
     try {
       const articlesSnap = prevCursor
-        ? await this.database.listDocuments(this.databaseID, AppwriteCollection.ARTICLES, [
-            Query.equal('writer_docID', userDocID),
-            Query.orderDesc('createdAt'),
-            Query.cursorAfter(prevCursor.id),
-            Query.limit(+limit),
-          ])
-        : await this.database.listDocuments(this.databaseID, AppwriteCollection.ARTICLES, [
-            Query.equal('writer_docID', userDocID),
-            Query.orderDesc('createdAt'),
-            Query.limit(+limit),
-          ]);
+        ? await this.database.listDocuments(this.databaseID, AppwriteCollection.ARTICLES, [Query.equal('writer_docID', userDocID), Query.orderDesc('createdAt'), Query.cursorAfter(prevCursor.id), Query.limit(+limit)])
+        : await this.database.listDocuments(this.databaseID, AppwriteCollection.ARTICLES, [Query.equal('writer_docID', userDocID), Query.orderDesc('createdAt'), Query.limit(+limit)]);
 
       return articlesSnap.documents.map((articleSnap) => deserializeAppwriteData(articleSnap) as MArticle.IArticle);
     } catch (error) {
@@ -90,7 +81,10 @@ export class ArticlesCollection {
               body: '',
               coverImage: '',
               title: '',
-              articleSeries: null,
+              articleSeries: {
+                docID: '',
+                name: '',
+              },
               readTimeInMin: 0,
               subTitle: '',
               writer: {
@@ -101,6 +95,7 @@ export class ArticlesCollection {
               },
               createdAt: new Date(),
               updatedAt: new Date(),
+              canPublishStory: true,
             },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -109,7 +104,10 @@ export class ArticlesCollection {
               docID: publishedArticle.id,
               title: publishedArticle.doc.title,
             }
-          : null,
+          : {
+              docID: '',
+              title: '',
+            },
       },
     };
 
@@ -120,7 +118,7 @@ export class ArticlesCollection {
 
   /** Publish the drafted article */
   public async publishDraftedArticle(draftedArticle: MDraftedArticle.IDraftedArticle): Promise<void> {
-    if (draftedArticle.doc.originalArticle) {
+    if (draftedArticle.doc.originalArticle?.docID) {
       // delete the drafted article and then update the connected original article
       await new DraftedArticlesCollection(this.database, this.databaseID).deleteDraftArticle(draftedArticle);
       const updatedOriginalArticle: MArticle.IArticle = {
@@ -132,7 +130,7 @@ export class ArticlesCollection {
       // delete the drafted article and then add the new article in publish mode
       await new DraftedArticlesCollection(this.database, this.databaseID).deleteDraftArticle(draftedArticle);
       const newArticle: MArticle.IArticle = {
-        id: v4(),
+        id: draftedArticle.id,
         doc: draftedArticle.doc.article,
       };
       await this.addArticleInPublishMode(newArticle);

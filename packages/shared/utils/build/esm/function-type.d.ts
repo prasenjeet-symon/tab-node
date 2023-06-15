@@ -36,6 +36,12 @@ export declare namespace AWFunction {
             APPWRITE_FUNCTION_PROJECT_ID: string;
             APPWRITE_FUNCTION_USER_ID: string;
             APPWRITE_FUNCTION_JWT: string;
+            APPWRITE_API_KEY: string;
+            APPWRITE_PROJECT_ID: string;
+            APPWRITE_ENDPOINT: string;
+            APPWRITE_DATABASE_ID: string;
+            APPWRITE_FUNCTION_ENDPOINT: string;
+            APPWRITE_FUNCTION_API_KEY: string;
         };
     }
     interface Res {

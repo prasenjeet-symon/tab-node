@@ -7,16 +7,15 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "deploy": "appwrite deploy function --all"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.1",
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "rollup": "^3.23.0",
     "rollup-plugin-typescript2": "^0.34.1"
   },
   "dependencies": {
-    "@tabnode/utils": "^1.0.0",
-    "node-appwrite": "^9.0.0",
-    "uuid": "^9.0.0"
+    "node-appwrite": "^9.0.0"
   }
 }

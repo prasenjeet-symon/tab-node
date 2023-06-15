@@ -20,84 +20,79 @@
  *      1. At the time of fetching sort the docs by toTrend ASC.
  *
  */
-import { AppwriteCollection, MUserRelationship, deserializeAppwriteData, serializeAppwriteData } from '@tabnode/utils';
+import { AppwriteCollection, MUser, MUserRelationship, deserializeAppwriteData, serializeAppwriteData } from '@tabnode/utils';
 import { Databases, Permission, Query, Role } from 'appwrite';
+import Appwrite from '../appwrite';
 import { AppwriteErrorReporter } from '../utils';
 
 export class UserRelationshipsCollection {
-  constructor(private database: Databases, private databaseID: string) {}
+    constructor(private database: Databases, private databaseID: string) {}
 
-  /** Follow user */
-  public async follow(userRelation: MUserRelationship.IUserRelationship) {
-    try {
-      await this.database.createDocument(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, userRelation.id, serializeAppwriteData(userRelation.doc), [
-        Permission.write(Role.user(userRelation.doc.fromUser.docID)),
-        Permission.delete(Role.user(userRelation.doc.fromUser.docID)),
-        Permission.delete(Role.user(userRelation.doc.toUser.docID)),
-      ]);
-    } catch (error) {
-      AppwriteErrorReporter.report(error);
+    /** Follow user */
+    public async follow(userRelation: MUserRelationship.IUserRelationship) {
+        try {
+            await this.database.createDocument(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, userRelation.id, serializeAppwriteData(userRelation.doc), [
+                Permission.write(Role.user(userRelation.doc.fromUser.docID)),
+                Permission.delete(Role.user(userRelation.doc.fromUser.docID)),
+                Permission.update(Role.user(userRelation.doc.fromUser.docID)),
+                Permission.read(Role.any()),
+            ]);
+        } catch (error) {
+            AppwriteErrorReporter.report(error);
+        }
     }
-  }
 
-  /** Un-follow user  */
-  public async unfollow(userRelation: MUserRelationship.IUserRelationship) {
-    try {
-      await this.database.deleteDocument(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, userRelation.id);
-    } catch (error) {
-      AppwriteErrorReporter.report(error);
+    /** Un-follow user  */
+    public async unfollow(userRelation: MUserRelationship.IUserRelationship) {
+        try {
+            await this.database.deleteDocument(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, userRelation.id);
+        } catch (error) {
+            AppwriteErrorReporter.report(error);
+        }
     }
-  }
 
-  /** Fetch all the followers of given user */
-  public async fetchFollowers(userID: string, prevCursor: MUserRelationship.IUserRelationship | undefined, limit: number): Promise<MUserRelationship.IUserRelationship[]> {
-    try {
-      const snap = prevCursor
-        ? await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [
-            Query.equal('toUser_docID', userID),
-            Query.orderDesc('fromTrend_boostPoint'),
-            Query.cursorAfter(prevCursor.id),
-            Query.limit(+limit),
-          ])
-        : await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [
-            Query.equal('toUser_docID', userID),
-            Query.orderDesc('fromTrend_boostPoint'),
-            Query.limit(+limit),
-          ]);
+    /** Fetch all the followers of given user */
+    public async fetchFollowers(userID: string, prevCursor: MUserRelationship.IUserRelationship | undefined, limit: number): Promise<MUserRelationship.IUserRelationship[]> {
+        try {
+            const snap = prevCursor
+                ? await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [Query.equal('toUser_docID', userID), Query.orderDesc('fromTrend_boostPoint'), Query.cursorAfter(prevCursor.id), Query.limit(+limit)])
+                : await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [Query.equal('toUser_docID', userID), Query.orderDesc('fromTrend_boostPoint'), Query.limit(+limit)]);
 
-      return snap.documents.map((doc) => {
-        return deserializeAppwriteData(doc) as MUserRelationship.IUserRelationship;
-      });
-    } catch (error) {
-      AppwriteErrorReporter.report(error);
-      if (AppwriteErrorReporter.isDocumentNotFound(error)) return [];
-      throw error;
+            return snap.documents.map((doc) => {
+                return deserializeAppwriteData(doc) as MUserRelationship.IUserRelationship;
+            });
+        } catch (error) {
+            AppwriteErrorReporter.report(error);
+            if (AppwriteErrorReporter.isDocumentNotFound(error)) return [];
+            throw error;
+        }
     }
-  }
 
-  /** Fetch followings of given user  */
-  public async fetchFollowings(userDocID: string, prevCursor: MUserRelationship.IUserRelationship | undefined, limit: number): Promise<MUserRelationship.IUserRelationship[]> {
-    try {
-      const snap = prevCursor
-        ? await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [
-            Query.equal('fromUser_docID', userDocID),
-            Query.orderDesc('toTrend_boostPoint'),
-            Query.cursorAfter(prevCursor.id),
-            Query.limit(+limit),
-          ])
-        : await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [
-            Query.equal('fromUser_docID', userDocID),
-            Query.orderDesc('toTrend_boostPoint'),
-            Query.limit(+limit),
-          ]);
+    /** Fetch followings of given user  */
+    public async fetchFollowings(userDocID: string, prevCursor: MUserRelationship.IUserRelationship | undefined, limit: number): Promise<MUserRelationship.IUserRelationship[]> {
+        try {
+            const snap = prevCursor
+                ? await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [Query.equal('fromUser_docID', userDocID), Query.orderDesc('toTrend_boostPoint'), Query.cursorAfter(prevCursor.id), Query.limit(+limit)])
+                : await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [Query.equal('fromUser_docID', userDocID), Query.orderDesc('toTrend_boostPoint'), Query.limit(+limit)]);
 
-      return snap.documents.map((doc) => {
-        return deserializeAppwriteData(doc) as MUserRelationship.IUserRelationship;
-      });
-    } catch (error) {
-      AppwriteErrorReporter.report(error);
-      if (AppwriteErrorReporter.isDocumentNotFound(error)) return [];
-      throw error;
+            return snap.documents.map((doc) => {
+                return deserializeAppwriteData(doc) as MUserRelationship.IUserRelationship;
+            });
+        } catch (error) {
+            AppwriteErrorReporter.report(error);
+            if (AppwriteErrorReporter.isDocumentNotFound(error)) return [];
+            throw error;
+        }
     }
-  }
+
+    /** Am i following user */
+    public async amIFollowing(targetUser: MUser.SUser) {
+        try {
+            const currentUser = await Appwrite.currentUserID();
+            const snap = await this.database.listDocuments(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, [Query.equal('fromUser_docID', currentUser), Query.equal('toUser_docID', targetUser.docID)]);
+            return snap.documents.length > 0;
+        } catch (error) {
+            AppwriteErrorReporter.report(error);
+        }
+    }
 }
