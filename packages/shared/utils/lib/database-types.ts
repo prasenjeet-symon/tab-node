@@ -28,6 +28,7 @@ export abstract class AppwriteCollection {
   public static readonly ARTICLES_DISTRIBUTION = 'ARTICLES_DISTRIBUTION';
   public static readonly ARTICLES_DISTRIBUTION_CLONE = 'ARTICLES_DISTRIBUTION_CLONE';
 }
+
 /**
  *
  * For the badges

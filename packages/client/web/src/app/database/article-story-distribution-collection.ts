@@ -30,20 +30,23 @@ export class ArticleStoryDistributionCollection {
             );
 
             // group the stories by userDocID
-            const groupedStories = finalStories.reduce((acc, cur) => {
-                const userDocId = cur.story ? cur.story.doc.user.docID : undefined;
-                if (!userDocId) return acc;
+            const groupedStories = finalStories.reduce(
+                (acc, cur) => {
+                    const userDocId = cur.story ? cur.story.doc.user.docID : undefined;
+                    if (!userDocId) return acc;
 
-                if (!acc[userDocId]) acc[userDocId] = [];
-                acc[userDocId].push(cur);
-                return acc;
-            }, {} as {
-                [key: string]: {
-                    story: MArticleStory.IArticleStory | null;
-                    id: string;
-                    doc: MArticleStoryDistribution.DArticleStoryDistribution;
-                }[];
-            });
+                    if (!acc[userDocId]) acc[userDocId] = [];
+                    acc[userDocId].push(cur);
+                    return acc;
+                },
+                {} as {
+                    [key: string]: {
+                        story: MArticleStory.IArticleStory | null;
+                        id: string;
+                        doc: MArticleStoryDistribution.DArticleStoryDistribution;
+                    }[];
+                }
+            );
 
             return groupedStories;
         } catch (error) {

@@ -2,6 +2,7 @@
   "name": "tabnode",
   "workspaces": [
     "packages/server/db-events/*",
+    "packages/server/http/*",
     "packages/shared/*"
   ],
   "devDependencies": {
