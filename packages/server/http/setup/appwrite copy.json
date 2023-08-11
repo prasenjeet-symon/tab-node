@@ -1,0 +1,27 @@
+{
+    "projectId": "TABNODE1",
+    "projectName": "TABNODE1",
+    "functions": [
+        {
+            "$id": "functions-http-setup",
+            "name": "functions-http-setup",
+            "runtime": "node-16.0",
+            "path": "./",
+            "entrypoint": "dist/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 800,
+            "variables": {
+                "APPWRITE_DATABASE_ID": "",
+                "APPWRITE_FUNCTION_ENDPOINT": "https://cloud.appwrite.io/v1",
+                "APPWRITE_FUNCTION_API_KEY": "",
+                "APPWRITE_FUNCTION_PROJECT_ID": "TABNODE1"
+            }
+        }
+    ]
+}
