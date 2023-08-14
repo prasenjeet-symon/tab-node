@@ -1,7 +1,7 @@
 // create all the collections
 import { AppwriteNodeJsClient } from '@tabnode/node-utils';
 import { AWFunction, AppwriteCollection, MTopic, serializeAppwriteData } from '@tabnode/utils';
-import { Databases, Permission, Role } from 'node-appwrite';
+import { AppwriteException, Databases, Permission, Role } from 'node-appwrite';
 import { CreateCollections } from './collections';
 import { CollectionIndex } from './indexes';
 
@@ -9,7 +9,7 @@ export class SetUp {
     private databases: Databases;
     private databaseID: string;
     private client: AppwriteNodeJsClient;
-    private DATABASE_NAME = 'TAB_NODE_DB';
+    private DATABASE_NAME = 'TAB_NODE_DATABASE';
 
     constructor(req: AWFunction.Req) {
         const client = new AppwriteNodeJsClient(req);
@@ -26,7 +26,8 @@ export class SetUp {
             await this.databases.get(this.databaseID);
             return true;
         } catch (error) {
-            return false;
+            if (error instanceof AppwriteException && error.code === 404) return false;
+            throw error;
         }
     }
 
@@ -59,8 +60,14 @@ export class SetUp {
     }
 
     public async setup() {
-        // do database exit
-        new CreateCollections(this.databases, this.databaseID).init();
+        const isDatabaseExit = await this.isDatabaseEXIT();
+        if (!isDatabaseExit) await this.createDatabase();
+        await sleep(1000);
+
+        await new CreateCollections(this.databases, this.databaseID).createCollections();
+        await sleep(5000);
+
+        await new CreateCollections(this.databases, this.databaseID).init();
         await sleep(5000);
 
         await new CollectionIndex(this.databases, this.databaseID).createIndexes();

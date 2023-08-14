@@ -14,7 +14,6 @@ export class AppwriteNodeJsClient {
             .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT || '') // Your API Endpoint
             .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID || '') // Your project ID
             .setKey(req.variables.APPWRITE_FUNCTION_API_KEY || '')
-            .setSelfSigned(true);
     }
 
     public database() {
