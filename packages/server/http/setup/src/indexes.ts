@@ -19,7 +19,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleIndex1]);
+        await Promise.allSettled([articleIndex1()]);
     }
 
     /** Create all the indexes for the collections COMMENTS */
@@ -54,7 +54,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([commentsIndex1, commentsIndex2, commentsIndex3]);
+        await Promise.allSettled([commentsIndex1(), commentsIndex2(), commentsIndex3()]);
     }
 
     /**
@@ -91,7 +91,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([likesIndex1, likesIndex2, likesIndex3]);
+        await Promise.allSettled([likesIndex1(), likesIndex2(), likesIndex3()]);
     }
 
     /** Create all the indexes for the collections ADDRESSES */
@@ -106,7 +106,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([addressesIndex1]);
+        await Promise.allSettled([addressesIndex1()]);
     }
 
     /** Create all the indexes for the collections SAVED_ARTICLES */
@@ -131,7 +131,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([savedArticlesIndex1, savedArticlesIndex2]);
+        await Promise.allSettled([savedArticlesIndex1(), savedArticlesIndex2()]);
     }
 
     /** Create all the indexes for the collection USER_TOPIC_RELATIONSHIPS  */
@@ -196,7 +196,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userTopicRelationshipsIndex1, userTopicRelationshipsIndex2, userTopicRelationshipsIndex3, userTopicRelationshipsIndex4, userTopicRelationshipsIndex5, userTopicRelationshipsIndex6]);
+        await Promise.allSettled([userTopicRelationshipsIndex1(), userTopicRelationshipsIndex2(), userTopicRelationshipsIndex3(), userTopicRelationshipsIndex4(), userTopicRelationshipsIndex5(), userTopicRelationshipsIndex6()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_TOPIC_RELATIONSHIPS */
@@ -231,7 +231,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleTopicRelationshipsIndex1, articleTopicRelationshipsIndex2, articleTopicRelationshipsIndex3]);
+        await Promise.allSettled([articleTopicRelationshipsIndex1(), articleTopicRelationshipsIndex2(), articleTopicRelationshipsIndex3()]);
     }
 
     /** Create all the indexes for the collection USER_RELATION_SUGGESTIONS */
@@ -256,7 +256,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userRelationSuggestionIndex1, userRelationSuggestionIndex2]);
+        await Promise.allSettled([userRelationSuggestionIndex1(), userRelationSuggestionIndex2()]);
     }
 
     /** Create all the indexes for the collection USER_ARTICLE_SUGGESTIONS */
@@ -281,7 +281,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userArticleSuggestionIndex1, userArticleSuggestionIndex2]);
+        await Promise.allSettled([userArticleSuggestionIndex1(), userArticleSuggestionIndex2()]);
     }
 
     /** Create all the indexes for the collection DRAFTED_ARTICLES */
@@ -296,7 +296,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([draftedArticlesIndex1]);
+        await Promise.allSettled([draftedArticlesIndex1()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_STORIES_DISTRIBUTION */
@@ -321,7 +321,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleStoriesDistributionIndex, articleStoriesDistributionIndex2]);
+        await Promise.allSettled([articleStoriesDistributionIndex(), articleStoriesDistributionIndex2()]);
     }
 
     /** Create all the indexes for the collection USER_SOCIAL_LINKS */
@@ -336,7 +336,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userSocialLinksIndex1]);
+        await Promise.allSettled([userSocialLinksIndex1()]);
     }
 
     /** Create all the indexes for the collection ARTICLES_DISTRIBUTION */
@@ -361,7 +361,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleDistributionIndex, articleDistributionIndex2]);
+        await Promise.allSettled([articleDistributionIndex(), articleDistributionIndex2()]);
     }
 
     /** Create all the indexes for the collection USER_NOTIFICATIONS */
@@ -386,7 +386,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userNotificationsIndex, userNotificationsIndex2]);
+        await Promise.allSettled([userNotificationsIndex(), userNotificationsIndex2()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_READERS*/
@@ -401,7 +401,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleReadersIndex]);
+        await Promise.allSettled([articleReadersIndex()]);
     }
 
     /** Create all the indexes for the collection BADGE_CHALLENGES */
@@ -426,7 +426,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([badgeChallengesIndex1, badgeChallengesIndex2]);
+        await Promise.allSettled([badgeChallengesIndex1(), badgeChallengesIndex2()]);
     }
 
     /** Create all the indexes for the collection USER_ACTIVITIES */
@@ -441,7 +441,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userActivitiesIndex]);
+        await Promise.allSettled([userActivitiesIndex()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_STORIES */
@@ -456,7 +456,7 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleStoriesIndex]);
+        await Promise.allSettled([articleStoriesIndex()]);
     }
 
     /**

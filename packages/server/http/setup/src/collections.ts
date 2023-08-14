@@ -362,36 +362,34 @@ export class CreateCollections {
         };
 
         console.log('\x1b[33m%s\x1b[0m', 'Creating collections...');
-        await Promise.allSettled([
-            collectionAddress,
-            collectionArticles,
-            collectionArticleDistribution,
-            collectionArticleDistributionClone,
-            collectionArticleReaders,
-            collectionArticleSeries,
-            collectionArticleStories,
-            collectionArticleStoriesDistribution,
-            collectionArticleTopicRelationships,
-            collectionBadges,
-            collectionBadgesChallenges,
-            collectionComments,
-            collectionDraftedArticles,
-            collectionLikes,
-            collectionSavedArticles,
-            collectionSponsors,
-            collectionTopics,
-            collectionTransactions,
-            collectionUserActivities,
-            collectionUsers,
-            collectionUserArticleSuggestions,
-            collectionUserArticleSuggestionsCopy,
-            collectionUserNotifications,
-            collectionUserRelationships,
-            collectionUserRelationshipSuggestions,
-            collectionUserSocialLinks,
-            collectionUserTopicRelationships,
-        ]);
-        console.log('\x1b[32m%s\x1b[0m', 'Collections created');
+            await collectionAddress(),
+            await collectionArticles(),
+            await collectionArticleDistribution(),
+            await collectionArticleDistributionClone(),
+            await collectionArticleReaders(),
+            await collectionArticleSeries(),
+            await collectionArticleStories(),
+            await collectionArticleStoriesDistribution(),
+            await collectionArticleTopicRelationships(),
+            await collectionBadges(),
+            await collectionBadgesChallenges(),
+            await collectionComments(),
+            await collectionDraftedArticles(),
+            await collectionLikes(),
+            await collectionSavedArticles(),
+            await collectionSponsors(),
+            await collectionTopics(),
+            await collectionTransactions(),
+            await collectionUserActivities(),
+            await collectionUsers(),
+            await collectionUserArticleSuggestions(),
+            await collectionUserArticleSuggestionsCopy(),
+            await collectionUserNotifications(),
+            await collectionUserRelationships(),
+            await collectionUserRelationshipSuggestions(),
+            await collectionUserSocialLinks(),
+            await collectionUserTopicRelationships(),
+            console.log('\x1b[32m%s\x1b[0m', 'Collections created');
     }
 
     /**
@@ -506,7 +504,7 @@ export class CreateCollections {
                     console.log('\x1b[32m%s\x1b[0m', 'AppwriteCollection.USERS.address attribute created');
                 }
             }
-        }
+        };
 
         const createTrendNumberOfTopicsAttribute = async () => {
             try {
@@ -678,27 +676,27 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createFullNameAttribute,
-            createEmailAttribute,
-            createAboutMeAttribute,
-            createProfilePicAttribute,
-            createAddressDocIDAttribute,
-            createMobileAttribute,
-            createIsActiveAttribute,
-            createTrendNumberOfTopicsAttribute,
-            createTrendNumberOfArticlesAttribute,
-            createTrendNumberOfCommentsAttribute,
-            createTrendNumberOfLikesAttribute,
-            createTrendNumberOfDislikesAttribute,
-            createTrendNumberOfReadAttribute,
-            createTrendNumberOfSavedAttribute,
-            createTrendNumberOfClickAttribute,
-            createTrendNumberOfShareAttribute,
-            createTrendBoostPointAttribute,
-            createTrendResetDateAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
-            createAddressAttribute
+            createFullNameAttribute(),
+            createEmailAttribute(),
+            createAboutMeAttribute(),
+            createProfilePicAttribute(),
+            createAddressDocIDAttribute(),
+            createMobileAttribute(),
+            createIsActiveAttribute(),
+            createTrendNumberOfTopicsAttribute(),
+            createTrendNumberOfArticlesAttribute(),
+            createTrendNumberOfCommentsAttribute(),
+            createTrendNumberOfLikesAttribute(),
+            createTrendNumberOfDislikesAttribute(),
+            createTrendNumberOfReadAttribute(),
+            createTrendNumberOfSavedAttribute(),
+            createTrendNumberOfClickAttribute(),
+            createTrendNumberOfShareAttribute(),
+            createTrendBoostPointAttribute(),
+            createTrendResetDateAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
+            createAddressAttribute(),
         ]);
 
         console.log('\x1b[32m%s\x1b[0m', 'AppwriteCollection.USERS all attributes created');
@@ -829,7 +827,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([createNameAttribute, createBadgesDescriptionAttribute, createColorAttribute, createLogoAttribute, createCreatedAtAttribute, createUpdatedAtAttribute, createNumberOfParticipantsAttribute, createNumberOfWinnerAttribute, createNumberOfLoserAttribute]);
+        await Promise.allSettled([createNameAttribute(), createBadgesDescriptionAttribute(), createColorAttribute(), createLogoAttribute(), createCreatedAtAttribute(), createUpdatedAtAttribute(), createNumberOfParticipantsAttribute(), createNumberOfWinnerAttribute(), createNumberOfLoserAttribute()]);
     }
 
     /**
@@ -1009,19 +1007,19 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createNameAttribute,
-            createColorAttribute,
-            createLogoAttribute,
-            createDescriptionAttribute,
-            createWeeklyTrendNumberOfArticlesAttribute,
-            createWeeklyTrendBoostPointAttribute,
-            createWeeklyTrendResetDateAttribute,
-            createMonthlyTrendNumberOfArticlesAttribute,
-            createMonthlyTrendBoostPointAttribute,
-            createMonthlyTrendResetDateAttribute,
-            createAssociatedUsersCountAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
+            createNameAttribute(),
+            createColorAttribute(),
+            createLogoAttribute(),
+            createDescriptionAttribute(),
+            createWeeklyTrendNumberOfArticlesAttribute(),
+            createWeeklyTrendBoostPointAttribute(),
+            createWeeklyTrendResetDateAttribute(),
+            createMonthlyTrendNumberOfArticlesAttribute(),
+            createMonthlyTrendBoostPointAttribute(),
+            createMonthlyTrendResetDateAttribute(),
+            createAssociatedUsersCountAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
         ]);
     }
 
@@ -1216,20 +1214,20 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createTitleAttribute,
-            createSubTitleAttribute,
-            createBodyAttribute,
-            createCoverImageAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
-            createWriterFullNameAttribute,
-            createWriterProfilePicAttribute,
-            createWriterAboutMeAttribute,
-            createWriterDocIDAttribute,
-            createReadTimeAttribute,
-            createArticleSeriesNameAttribute,
-            createArticleSeriesDocIDAttribute,
-            createCanPublishStoryAttribute,
+            createTitleAttribute(),
+            createSubTitleAttribute(),
+            createBodyAttribute(),
+            createCoverImageAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
+            createWriterFullNameAttribute(),
+            createWriterProfilePicAttribute(),
+            createWriterAboutMeAttribute(),
+            createWriterDocIDAttribute(),
+            createReadTimeAttribute(),
+            createArticleSeriesNameAttribute(),
+            createArticleSeriesDocIDAttribute(),
+            createCanPublishStoryAttribute(),
         ]);
     }
 
@@ -1426,20 +1424,20 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createCommentBodyAttribute,
-            createCommentCreatedAtAttribute,
-            createCommentUpdatedAtAttribute,
-            createCommentedByFullNameAttribute,
-            createCommentedByProfilePicAttribute,
-            createCommentedByAboutMeAttribute,
-            createCommentedByDocIDAttribute,
-            createArticleDocIDAttribute,
-            createArticleTitleAttribute,
-            createWriterFullNameAttribute,
-            createWriterProfilePicAttribute,
-            createWriterAboutMeAttribute,
-            createWriterDocIDAttribute,
-            createParentCommentDocIDAttribute,
+            createCommentBodyAttribute(),
+            createCommentCreatedAtAttribute(),
+            createCommentUpdatedAtAttribute(),
+            createCommentedByFullNameAttribute(),
+            createCommentedByProfilePicAttribute(),
+            createCommentedByAboutMeAttribute(),
+            createCommentedByDocIDAttribute(),
+            createArticleDocIDAttribute(),
+            createArticleTitleAttribute(),
+            createWriterFullNameAttribute(),
+            createWriterProfilePicAttribute(),
+            createWriterAboutMeAttribute(),
+            createWriterDocIDAttribute(),
+            createParentCommentDocIDAttribute(),
         ]);
     }
 
@@ -1570,7 +1568,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([createLikedByFullNameAttribute, createLikedByProfilePicAttribute, createLikedByAboutMeAttribute, createLikedByDocIDAttribute, createArticleDocIDAttribute, createArticleTitleAttribute, createLikedAtAttribute, createUpdatedAttribute, createStatusAttribute]);
+        await Promise.allSettled([createLikedByFullNameAttribute(), createLikedByProfilePicAttribute(), createLikedByAboutMeAttribute(), createLikedByDocIDAttribute(), createArticleDocIDAttribute(), createArticleTitleAttribute(), createLikedAtAttribute(), createUpdatedAttribute(), createStatusAttribute()]);
     }
 
     /**
@@ -1739,18 +1737,18 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createStreetAttribute,
-            createCityAttribute,
-            createLandmarkAttribute,
-            createStateAttribute,
-            createCountryAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
-            createZipCodeAttribute,
-            createAddressOfFullNameAttribute,
-            createAddressOfProfilePicAttribute,
-            createAddressOfAboutMeAttribute,
-            createAddressOfDocIDAttribute,
+            createStreetAttribute(),
+            createCityAttribute(),
+            createLandmarkAttribute(),
+            createStateAttribute(),
+            createCountryAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
+            createZipCodeAttribute(),
+            createAddressOfFullNameAttribute(),
+            createAddressOfProfilePicAttribute(),
+            createAddressOfAboutMeAttribute(),
+            createAddressOfDocIDAttribute(),
         ]);
     }
 
@@ -1921,18 +1919,18 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createSavedArticleDocIDAttribute,
-            createSavedArticleTitleAttribute,
-            createSavedByFullNameAttribute,
-            createSavedByProfilePicAttribute,
-            createSavedByAboutMeAttribute,
-            createSavedByDocIDAttribute,
-            createWriterFullNameAttribute,
-            createWriterProfilePicAttribute,
-            createWriterAboutMeAttribute,
-            createWriterDocIDAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
+            createSavedArticleDocIDAttribute(),
+            createSavedArticleTitleAttribute(),
+            createSavedByFullNameAttribute(),
+            createSavedByProfilePicAttribute(),
+            createSavedByAboutMeAttribute(),
+            createSavedByDocIDAttribute(),
+            createWriterFullNameAttribute(),
+            createWriterProfilePicAttribute(),
+            createWriterAboutMeAttribute(),
+            createWriterDocIDAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
         ]);
     }
 
@@ -2142,21 +2140,21 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createArticleDocIDAttribute,
-            createArticleTitleAttribute,
-            createReaderFullNameAttribute,
-            createReaderProfilePicAttribute,
-            createReaderAboutMeAttribute,
-            createReaderDocIDAttribute,
-            createWriterFullNameAttribute,
-            createWriterProfilePicAttribute,
-            createWriterAboutMeAttribute,
-            createWriterDocIDAttribute,
-            createCreatedAtAttribute,
-            createUpdatedAtAttribute,
-            createReadTimeInMinAttribute,
-            createArticleTimeInMinAttribute,
-            createIsLiveAttribute,
+            createArticleDocIDAttribute(),
+            createArticleTitleAttribute(),
+            createReaderFullNameAttribute(),
+            createReaderProfilePicAttribute(),
+            createReaderAboutMeAttribute(),
+            createReaderDocIDAttribute(),
+            createWriterFullNameAttribute(),
+            createWriterProfilePicAttribute(),
+            createWriterAboutMeAttribute(),
+            createWriterDocIDAttribute(),
+            createCreatedAtAttribute(),
+            createUpdatedAtAttribute(),
+            createReadTimeInMinAttribute(),
+            createArticleTimeInMinAttribute(),
+            createIsLiveAttribute(),
         ]);
     }
 
@@ -2286,7 +2284,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([createParticipantFullNameAttribute, createParticipantProfilePicAttribute, createParticipantAboutMeAttribute, createParticipantDocIDAttribute, createBadgeDocIDAttribute, createBadgeNameAttribute, createCreatedAtAttribute, createUpdatedAtAttribute, createStatusAttribute]);
+        await Promise.allSettled([createParticipantFullNameAttribute(), createParticipantProfilePicAttribute(), createParticipantAboutMeAttribute(), createParticipantDocIDAttribute(), createBadgeDocIDAttribute(), createBadgeNameAttribute(), createCreatedAtAttribute(), createUpdatedAtAttribute(), createStatusAttribute()]);
     }
 
     /**
@@ -2481,20 +2479,20 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createFromUserFullNameAttribute,
-            createFromUserProfilePicAttribute,
-            createFromUserAboutMeAttribute,
-            createFromUserDocIDAttribute,
-            createToUserFullNameAttribute,
-            createToUserProfilePicAttribute,
-            createToUserAboutMeAttribute,
-            createToUserDocIDAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createFromTrendBoostPointFloatAttribute,
-            createFromTrendResetDateDatetimeAttribute,
-            createToTrendBoostPointFloatAttribute,
-            createToTrendResetDateDatetimeAttribute,
+            createFromUserFullNameAttribute(),
+            createFromUserProfilePicAttribute(),
+            createFromUserAboutMeAttribute(),
+            createFromUserDocIDAttribute(),
+            createToUserFullNameAttribute(),
+            createToUserProfilePicAttribute(),
+            createToUserAboutMeAttribute(),
+            createToUserDocIDAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createFromTrendBoostPointFloatAttribute(),
+            createFromTrendResetDateDatetimeAttribute(),
+            createToTrendBoostPointFloatAttribute(),
+            createToTrendResetDateDatetimeAttribute(),
         ]);
     }
 
@@ -2677,19 +2675,19 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createUserFullNameStringAttribute,
-            createUserProfilePicStringAttribute,
-            createUserAboutMeStringAttribute,
-            createUserDocIDStringAttribute,
-            createTopicDocIDStringAttribute,
-            createTopicNameStringAttribute,
-            createTopicColorStringAttribute,
-            createTopicLogoStringAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createTrendBoostPointFloatAttribute,
-            createTrendResetDateDatetimeAttribute,
-            createIsStableBooleanAttribute,
+            createUserFullNameStringAttribute(),
+            createUserProfilePicStringAttribute(),
+            createUserAboutMeStringAttribute(),
+            createUserDocIDStringAttribute(),
+            createTopicDocIDStringAttribute(),
+            createTopicNameStringAttribute(),
+            createTopicColorStringAttribute(),
+            createTopicLogoStringAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createTrendBoostPointFloatAttribute(),
+            createTrendResetDateDatetimeAttribute(),
+            createIsStableBooleanAttribute(),
         ]);
     }
 
@@ -2833,16 +2831,16 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createArticleDocIDStringAttribute,
-            createArticleTitleStringAttribute,
-            createTopicDocIDStringAttribute,
-            createTopicNameStringAttribute,
-            createTopicColorStringAttribute,
-            createTopicLogoStringAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createTrendBoostPointFloatAttribute,
-            createTrendResetDateDatetimeAttribute,
+            createArticleDocIDStringAttribute(),
+            createArticleTitleStringAttribute(),
+            createTopicDocIDStringAttribute(),
+            createTopicNameStringAttribute(),
+            createTopicColorStringAttribute(),
+            createTopicLogoStringAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createTrendBoostPointFloatAttribute(),
+            createTrendResetDateDatetimeAttribute(),
         ]);
     }
 
@@ -3030,19 +3028,19 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createForFullNameStringAttribute,
-            createForProfilePicStringAttribute,
-            createForAboutMeStringAttribute,
-            createForDocIDStringAttribute,
-            createUserFullNameStringAttribute,
-            createUserProfilePicStringAttribute,
-            createUserAboutMeStringAttribute,
-            createUserDocIDStringAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createImpressionCountIntegerAttribute,
-            createBoostPointFloatAttribute,
-            createIsStaleBooleanAttribute,
+            createForFullNameStringAttribute(),
+            createForProfilePicStringAttribute(),
+            createForAboutMeStringAttribute(),
+            createForDocIDStringAttribute(),
+            createUserFullNameStringAttribute(),
+            createUserProfilePicStringAttribute(),
+            createUserAboutMeStringAttribute(),
+            createUserDocIDStringAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createImpressionCountIntegerAttribute(),
+            createBoostPointFloatAttribute(),
+            createIsStaleBooleanAttribute(),
         ]);
     }
 
@@ -3199,17 +3197,17 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createForFullNameStringAttribute,
-            createForProfilePicStringAttribute,
-            createForAboutMeStringAttribute,
-            createForDocIDStringAttribute,
-            createArticleDocIDStringAttribute,
-            createArticleTitleStringAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createImpressionCountIntegerAttribute,
-            createBoostPointFloatAttribute,
-            createIsStaleBooleanAttribute,
+            createForFullNameStringAttribute(),
+            createForProfilePicStringAttribute(),
+            createForAboutMeStringAttribute(),
+            createForDocIDStringAttribute(),
+            createArticleDocIDStringAttribute(),
+            createArticleTitleStringAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createImpressionCountIntegerAttribute(),
+            createBoostPointFloatAttribute(),
+            createIsStaleBooleanAttribute(),
         ]);
     }
 
@@ -3366,18 +3364,18 @@ export class CreateCollections {
             }
         };
 
-        await Promise.all([
-            createForFullNameStringAttribute,
-            createForProfilePicStringAttribute,
-            createForAboutMeStringAttribute,
-            createForDocIDStringAttribute,
-            createArticleDocIDStringAttribute,
-            createArticleTitleStringAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
-            createImpressionCountIntegerAttribute,
-            createBoostPointFloatAttribute,
-            createIsStaleBooleanAttribute,
+        await Promise.allSettled([
+            createForFullNameStringAttribute(),
+            createForProfilePicStringAttribute(),
+            createForAboutMeStringAttribute(),
+            createForDocIDStringAttribute(),
+            createArticleDocIDStringAttribute(),
+            createArticleTitleStringAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
+            createImpressionCountIntegerAttribute(),
+            createBoostPointFloatAttribute(),
+            createIsStaleBooleanAttribute(),
         ]);
     }
 
@@ -3507,7 +3505,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([createUserFullNameStringAttribute, createUserProfilePicStringAttribute, createUserAboutMeStringAttribute, createUserDocIDStringAttribute, createArticleDocIDStringAttribute, createArticleTitleStringAttribute, createActionEnumAttribute, createCreatedAtDatetimeAttribute, createUpdatedAtDatetimeAttribute]);
+        await Promise.allSettled([createUserFullNameStringAttribute(), createUserProfilePicStringAttribute(), createUserAboutMeStringAttribute(), createUserDocIDStringAttribute(), createArticleDocIDStringAttribute(), createArticleTitleStringAttribute(), createActionEnumAttribute(), createCreatedAtDatetimeAttribute(), createUpdatedAtDatetimeAttribute()]);
     }
 
     /**
@@ -3728,22 +3726,22 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            createFullNameStringAttribute,
-            createProfilePicStringAttribute,
-            createAboutMeStringAttribute,
-            createDocIDStringAttribute,
-            createOriginatorFullNameStringAttribute,
-            createOriginatorTypeEnumAttribute,
-            createOriginatorProfilePicStringAttribute,
-            createOriginatorDocIDStringAttribute,
-            createOriginatorAboutMeStringAttribute,
-            createTitleStringAttribute,
-            createNotificationStringAttribute,
-            createLinkStringAttribute,
-            createTopicEnumAttribute,
-            createIsReadBooleanAttribute,
-            createCreatedAtDatetimeAttribute,
-            createUpdatedAtDatetimeAttribute,
+            createFullNameStringAttribute(),
+            createProfilePicStringAttribute(),
+            createAboutMeStringAttribute(),
+            createDocIDStringAttribute(),
+            createOriginatorFullNameStringAttribute(),
+            createOriginatorTypeEnumAttribute(),
+            createOriginatorProfilePicStringAttribute(),
+            createOriginatorDocIDStringAttribute(),
+            createOriginatorAboutMeStringAttribute(),
+            createTitleStringAttribute(),
+            createNotificationStringAttribute(),
+            createLinkStringAttribute(),
+            createTopicEnumAttribute(),
+            createIsReadBooleanAttribute(),
+            createCreatedAtDatetimeAttribute(),
+            createUpdatedAtDatetimeAttribute(),
         ]);
     }
 
@@ -4020,24 +4018,24 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            originalArticleDocIDStringAttribute,
-            originalArticleTitleStringAttribute,
-            createdAtDatetimeAttribute,
-            updatedAtDatetimeAttribute,
-            articleTitleStringAttribute,
-            articleSubTitleStringAttribute,
-            articleBodyStringAttribute,
-            articleCoverImageStringAttribute,
-            articleCreatedAtDatetimeAttribute,
-            articleUpdatedAtDatetimeAttribute,
-            articleWriterFullNameStringAttribute,
-            articleWriterProfilePicStringAttribute,
-            articleWriterAboutMeStringAttribute,
-            articleWriterDocIDStringAttribute,
-            articleReadTimeInMinFloatAttribute,
-            articleArticleSeriesDocIDStringAttribute,
-            articleArticleSeriesNameStringAttribute,
-            articleCanPublishStoryBooleanAttribute,
+            originalArticleDocIDStringAttribute(),
+            originalArticleTitleStringAttribute(),
+            createdAtDatetimeAttribute(),
+            updatedAtDatetimeAttribute(),
+            articleTitleStringAttribute(),
+            articleSubTitleStringAttribute(),
+            articleBodyStringAttribute(),
+            articleCoverImageStringAttribute(),
+            articleCreatedAtDatetimeAttribute(),
+            articleUpdatedAtDatetimeAttribute(),
+            articleWriterFullNameStringAttribute(),
+            articleWriterProfilePicStringAttribute(),
+            articleWriterAboutMeStringAttribute(),
+            articleWriterDocIDStringAttribute(),
+            articleReadTimeInMinFloatAttribute(),
+            articleArticleSeriesDocIDStringAttribute(),
+            articleArticleSeriesNameStringAttribute(),
+            articleCanPublishStoryBooleanAttribute(),
         ]);
     }
 
@@ -4203,19 +4201,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([
-            articleDocIDStringAttribute,
-            articleTitleStringAttribute,
-            storyBackgroundImageStringAttribute,
-            storySummeryStringAttribute,
-            createdAtDatetimeAttribute,
-            updatedAtDatetimeAttribute,
-            expireAtDatetimeAttribute,
-            userFullNameStringAttribute,
-            userProfilePicStringAttribute,
-            userAboutMeStringAttribute,
-            userDocIDStringAttribute,
-        ]);
+        await Promise.allSettled([articleDocIDStringAttribute(), articleTitleStringAttribute(), storyBackgroundImageStringAttribute(), storySummeryStringAttribute(), createdAtDatetimeAttribute(), updatedAtDatetimeAttribute(), expireAtDatetimeAttribute(), userFullNameStringAttribute(), userProfilePicStringAttribute(), userAboutMeStringAttribute(), userDocIDStringAttribute()]);
     }
 
     /**
@@ -4310,7 +4296,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([nameStringAttribute, descriptionStringAttribute, coverImageStringAttribute, numberOfArticlesIntegerAttribute, createdAtDatetimeAttribute, updatedAtDatetimeAttribute]);
+        await Promise.allSettled([nameStringAttribute(), descriptionStringAttribute(), coverImageStringAttribute(), numberOfArticlesIntegerAttribute(), createdAtDatetimeAttribute(), updatedAtDatetimeAttribute()]);
     }
 
     /**
@@ -4460,7 +4446,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([forFullNameStringAttribute, forProfilePicStringAttribute, forAboutMeStringAttribute, forDocIDStringAttribute, storyDocIDStringAttribute, boostPointFloatAttribute, createdAtDatetimeAttribute, updatedAtDatetimeAttribute, expireAtDatetimeAttribute, isSeenBooleanAttribute]);
+        await Promise.allSettled([forFullNameStringAttribute(), forProfilePicStringAttribute(), forAboutMeStringAttribute(), forDocIDStringAttribute(), storyDocIDStringAttribute(), boostPointFloatAttribute(), createdAtDatetimeAttribute(), updatedAtDatetimeAttribute(), expireAtDatetimeAttribute(), isSeenBooleanAttribute()]);
     }
 
     /**
@@ -4584,7 +4570,7 @@ export class CreateCollections {
             }
         };
 
-        await Promise.allSettled([userFullNameStringAttribute, userProfilePicStringAttribute, userAboutMeStringAttribute, userDocIDStringAttribute, socialLinkStringAttribute, typeEnumAttribute, createdAtDatetimeAttribute, updatedAtDatetimeAttribute]);
+        await Promise.allSettled([userFullNameStringAttribute(), userProfilePicStringAttribute(), userAboutMeStringAttribute(), userDocIDStringAttribute(), socialLinkStringAttribute(), typeEnumAttribute(), createdAtDatetimeAttribute(), updatedAtDatetimeAttribute()]);
     }
 
     /**
@@ -4762,18 +4748,18 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            phaseBooleanAttribute,
-            amongStringAttribute,
-            boostPointFloatAttribute,
-            impressionCountIntegerAttribute,
-            trackOrderEnumAttribute,
-            createdAtDatetimeAttribute,
-            updatedAtDatetimeAttribute,
-            isStaleBooleanAttribute,
-            article_docIDStringAttribute,
-            article_titleStringAttribute,
-            topicIDSStringAttribute,
-            lastUserIDSStringAttribute,
+            phaseBooleanAttribute(),
+            amongStringAttribute(),
+            boostPointFloatAttribute(),
+            impressionCountIntegerAttribute(),
+            trackOrderEnumAttribute(),
+            createdAtDatetimeAttribute(),
+            updatedAtDatetimeAttribute(),
+            isStaleBooleanAttribute(),
+            article_docIDStringAttribute(),
+            article_titleStringAttribute(),
+            topicIDSStringAttribute(),
+            lastUserIDSStringAttribute(),
         ]);
     }
 
@@ -4953,18 +4939,18 @@ export class CreateCollections {
         };
 
         await Promise.allSettled([
-            phaseBooleanAttribute,
-            amongStringAttribute,
-            boostPointFloatAttribute,
-            impressionCountIntegerAttribute,
-            trackOrderEnumAttribute,
-            createdAtDatetimeAttribute,
-            updatedAtDatetimeAttribute,
-            isStaleBooleanAttribute,
-            article_docIDStringAttribute,
-            article_titleStringAttribute,
-            topicIDSStringAttribute,
-            lastUserIDSStringAttribute,
+            phaseBooleanAttribute(),
+            amongStringAttribute(),
+            boostPointFloatAttribute(),
+            impressionCountIntegerAttribute(),
+            trackOrderEnumAttribute(),
+            createdAtDatetimeAttribute(),
+            updatedAtDatetimeAttribute(),
+            isStaleBooleanAttribute(),
+            article_docIDStringAttribute(),
+            article_titleStringAttribute(),
+            topicIDSStringAttribute(),
+            lastUserIDSStringAttribute(),
         ]);
     }
 
@@ -4974,7 +4960,6 @@ export class CreateCollections {
      * @return {Promise<void>} A promise that resolves when the initialization is complete.
      */
     public async init(): Promise<void> {
-        await this.createCollections();
         await this.createMUser();
         await this.createMBadge();
         await this.createMTopic();
