@@ -196,7 +196,26 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([userTopicRelationshipsIndex1(), userTopicRelationshipsIndex2(), userTopicRelationshipsIndex3(), userTopicRelationshipsIndex4(), userTopicRelationshipsIndex5(), userTopicRelationshipsIndex6()]);
+        // USER_TOPIC_RELATIONSHIPS_INDEX_7 : user_docID asc
+        const userTopicRelationshipsIndex7 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_7';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['user_docID'], ['asc']);
+            }
+        };
+
+        // USER_TOPIC_RELATIONSHIPS_INDEX_8 : trend_boostPoint:desc
+        const userTopicRelationshipsIndex8 = async () => {
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, 'USER_TOPIC_RELATIONSHIPS_INDEX_8');
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, 'USER_TOPIC_RELATIONSHIPS_INDEX_8', 'key', ['trend_boostPoint'], ['desc']);
+            }
+        };
+
+        await Promise.allSettled([userTopicRelationshipsIndex1(), userTopicRelationshipsIndex2(), userTopicRelationshipsIndex3(), userTopicRelationshipsIndex4(), userTopicRelationshipsIndex5(), userTopicRelationshipsIndex6(), userTopicRelationshipsIndex7(), userTopicRelationshipsIndex8()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_TOPIC_RELATIONSHIPS */

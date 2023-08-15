@@ -1,127 +1,145 @@
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
 
 .sessionPage {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 100px;
-  width: 85%;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 100px;
+    width: 85%;
+    margin: 0 auto;
 }
 
 .sessionPage > div:nth-of-type(2) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .sessionPage > div:nth-of-type(2) img {
-  width: 350px;
-  height: auto;
-  object-fit: cover;
-  object-position: center center;
+    width: 350px;
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .sessionPage > div:nth-of-type(2) > div:nth-of-type(1) {
-  font-family: 'Shrikhand', cursive;
-  font-size: 2rem;
-  color: black;
-  text-align: center;
-  margin: 15px auto;
-  text-transform: capitalize;
+    font-family: 'Shrikhand', cursive;
+    font-size: 2rem;
+    color: black;
+    text-align: center;
+    margin: 15px auto;
+    text-transform: capitalize;
 }
 
 .sessionPage > div:nth-of-type(2) > div:nth-of-type(1) span {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .sessionPage > div:nth-of-type(1) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(1) {
-  font-size: 2rem;
-  font-weight: 600;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(2) {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  margin: 30px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    margin: 30px 0px;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(2) > div {
-  display: flex;
-  align-items: center;
-  padding: 15px 30px;
-  border-radius: 50px;
-  border: 1px solid gainsboro;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: 1px solid gainsboro;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(2) > div span {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(3) {
-  width: 100%;
-  border-top: 1px solid gainsboro;
-  height: 10px;
+    width: 100%;
+    border-top: 1px solid gainsboro;
+    height: 10px;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) {
-  margin: 25px 0px 0px 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+    margin: 25px 0px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) {
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0px 0px 20px 0px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0px 0px 20px 0px;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) input {
-  flex: 1;
-  outline: none;
-  border: 0px;
-  background-color: rgb(240, 240, 240);
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 15px 15px;
-  border-radius: 50px;
+    flex: 1;
+    outline: none;
+    border: 0px;
+    background-color: rgb(240, 240, 240);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 15px 15px;
+    border-radius: 50px;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) button {
-  padding: 15px 100px;
-  border-radius: 50px;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  background-color: var(--primary-color);
-  border: 0px;
-  outline: none;
-  margin: 15px 0px 0px 0px;
-  cursor: pointer;
+    padding: 15px 100px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: var(--primary-color);
+    border: 0px;
+    outline: none;
+    margin: 15px 0px 0px 0px;
+    cursor: pointer;
 }
 
 .sessionPage > div:nth-of-type(1) > div:nth-of-type(4) button:hover {
-  background-color: var(--primary-color-hover);
-  cursor: pointer;
+    background-color: var(--primary-color-hover);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 700px) {
+    .sessionPage {
+        grid-template-columns: 1fr;
+        grid-gap: 100px;
+        width: 95%;
+        margin: 0 auto;
+        padding: 100px 0px 0px 0px;
+    }
+
+    .sessionPage > div:nth-of-type(2) {
+        display: none;
+    }
+
+    .sessionPage > div:nth-of-type(1) > div:nth-of-type(2) {
+        grid-template-columns: 1fr;
+    }
 }

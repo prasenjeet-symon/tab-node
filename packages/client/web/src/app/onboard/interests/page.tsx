@@ -95,6 +95,7 @@ export default function InterestsPage() {
 
     useEffect(() => {
         fetchTopics().then((topics) => {
+            console.log(topics);
             return fetchSelectedTopics(topics, setTopics);
         });
     }, []);
