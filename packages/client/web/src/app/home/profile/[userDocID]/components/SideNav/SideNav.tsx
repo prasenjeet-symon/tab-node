@@ -3,9 +3,10 @@
 import AppwriteDatabase from '@/app/database/appwrite-database';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FiSettings } from 'react-icons/fi';
+import { FiLogOut, FiSettings } from 'react-icons/fi';
 import { MdBookmarkBorder, MdDrafts, MdOutlineAnalytics, MdOutlineCreditScore, MdOutlineDrafts, MdOutlinePeopleAlt, MdOutlinePersonAddAlt1, MdOutlinePostAdd, MdOutlineStorm } from 'react-icons/md';
 import styles from './SideNav.module.css';
+import Appwrite from '@/app/appwrite';
 
 export default function SideNav() {
     const pathname = usePathname();
@@ -30,6 +31,11 @@ export default function SideNav() {
     const isActive = (link: string) => {
         return pathname.toLowerCase() === link.toLowerCase() ? styles.activeLink : '';
     };
+
+    const logout = async () => {
+       await Appwrite.logout();
+       router.push('/');
+    }
 
     return (
         <section className={styles.sideNav}>
@@ -109,6 +115,18 @@ export default function SideNav() {
                     <div> Profile Setting </div>
                 </div>
             )}
+
+            {/* Logout button */}
+            {
+                isPublic ? null : (
+                    <div onClick={() => logout()} className={`${styles.sideNavItem} ${isActive('/')} ${styles.logout}`}>
+                        <div>
+                            <FiLogOut />
+                        </div>
+                        <div> Logout </div>
+                    </div>
+                )
+            }
         </section>
     );
 }

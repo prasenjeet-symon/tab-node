@@ -60,7 +60,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // if the route is /onboard/session the just continue the request
+  // if the route is /onboard/session then just continue the request
   if (request.nextUrl.pathname === '/onboard/session') {
     const isAuthenticated = await handleAuthentication();
     if (isAuthenticated) {

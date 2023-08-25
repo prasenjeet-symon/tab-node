@@ -19,7 +19,16 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleIndex1()]);
+        const articleIndex2 = async ()=>{
+            const key = 'ARTICLE_INDEX_2';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLES, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLES, key, 'key', ['writer_docID'], ['asc']);
+            }
+        }
+
+        await Promise.allSettled([articleIndex1(), articleIndex2()]);
     }
 
     /** Create all the indexes for the collections COMMENTS */
@@ -54,7 +63,28 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([commentsIndex1(), commentsIndex2(), commentsIndex3()]);
+        // separate indexes
+        const commentsIndex4 = async () => {
+            const key = 'COMMENTS_INDEX_4';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.COMMENTS, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.COMMENTS, key, 'key', ['parentComment_docID'], ['asc']);
+            }
+        }
+
+        const commentsIndex5 = async () => {
+            const key = 'COMMENTS_INDEX_5';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.COMMENTS, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.COMMENTS, key, 'key', ['createdAt'], ['desc']);
+            }
+        }
+
+        
+
+        await Promise.allSettled([commentsIndex1(), commentsIndex2(), commentsIndex3(), commentsIndex4(), commentsIndex5()]);
     }
 
     /**
@@ -91,7 +121,44 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([likesIndex1(), likesIndex2(), likesIndex3()]);
+        // separate indexes
+        const likesIndex4 = async () => {
+            const key = 'LIKES_INDEX_4';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.LIKES, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.LIKES, key, 'key', ['article_docID'], ['asc']);
+            }
+        }
+
+        const likesIndex5 = async () => {
+            const key = 'LIKES_INDEX_5';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.LIKES, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.LIKES, key, 'key', ['likedBy_docID'], ['asc']);
+            }
+        }
+
+        const likesIndex6 = async () => {
+            const key = 'LIKES_INDEX_6';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.LIKES, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.LIKES, key, 'key', ['status'], ['asc']);
+            }
+        }
+
+        const likesIndex7 = async () => {
+            const key = 'LIKES_INDEX_7';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.LIKES, key);
+            } catch (error) {
+                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.LIKES, key, 'key', ['createdAt'], ['desc']);
+            }
+        }
+
+        await Promise.allSettled([likesIndex1(), likesIndex2(), likesIndex3(), likesIndex4(), likesIndex5(), likesIndex6(), likesIndex7()]);
     }
 
     /** Create all the indexes for the collections ADDRESSES */
@@ -196,26 +263,69 @@ export class CollectionIndex {
             }
         };
 
-        // USER_TOPIC_RELATIONSHIPS_INDEX_7 : user_docID asc
-        const userTopicRelationshipsIndex7 = async () => {
-            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_7';
+    
+
+        // topic_docID
+        const userTopicRelationshipsIndex9 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_9';
             try {
                 await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
             } catch (error) {
-                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['user_docID'], ['asc']);
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['topic_docID'], ['asc']);
             }
-        };
+        }
 
-        // USER_TOPIC_RELATIONSHIPS_INDEX_8 : trend_boostPoint:desc
-        const userTopicRelationshipsIndex8 = async () => {
+        // createdAt
+        const userTopicRelationshipsIndex10 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_10';
             try {
-                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, 'USER_TOPIC_RELATIONSHIPS_INDEX_8');
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
             } catch (error) {
-                if (error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, 'USER_TOPIC_RELATIONSHIPS_INDEX_8', 'key', ['trend_boostPoint'], ['desc']);
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['createdAt'], ['asc']);
             }
-        };
+        }
 
-        await Promise.allSettled([userTopicRelationshipsIndex1(), userTopicRelationshipsIndex2(), userTopicRelationshipsIndex3(), userTopicRelationshipsIndex4(), userTopicRelationshipsIndex5(), userTopicRelationshipsIndex6(), userTopicRelationshipsIndex7(), userTopicRelationshipsIndex8()]);
+        // createdAt desc 
+        const userTopicRelationshipsIndex11 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_11';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['createdAt'], ['desc']);
+            }
+        }
+
+        // user_docID
+        const userTopicRelationshipsIndex12 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_12';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['user_docID'], ['asc']);
+            }
+        }
+
+        // trend_boostPoint
+        const userTopicRelationshipsIndex13 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_13';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['trend_boostPoint'], ['desc']);
+            }
+        }
+
+        // isStable
+        const userTopicRelationshipsIndex14 = async () => {
+            const key = 'USER_TOPIC_RELATIONSHIPS_INDEX_14';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_TOPIC_RELATIONSHIPS, key, 'key', ['isStable'], ['asc']);
+            }
+        }
+
+        await Promise.allSettled([userTopicRelationshipsIndex1(), userTopicRelationshipsIndex2(), userTopicRelationshipsIndex3(), userTopicRelationshipsIndex4(), userTopicRelationshipsIndex5(), userTopicRelationshipsIndex6(),  userTopicRelationshipsIndex9(), userTopicRelationshipsIndex10(), userTopicRelationshipsIndex11(), userTopicRelationshipsIndex12(), userTopicRelationshipsIndex13(), userTopicRelationshipsIndex14()]);
     }
 
     /** Create all the indexes for the collection ARTICLE_TOPIC_RELATIONSHIPS */
@@ -250,7 +360,25 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleTopicRelationshipsIndex1(), articleTopicRelationshipsIndex2(), articleTopicRelationshipsIndex3()]);
+        const articleTopicRelationshipsIndex4 = async () => {
+            const key = 'ARTICLE_TOPIC_RELATIONSHIPS_INDEX_4';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, key, 'key', ['topic_docID'], ['asc']);
+            }
+        }
+
+        const articleTopicRelationshipsIndex5 = async () => {
+            const key = 'ARTICLE_TOPIC_RELATIONSHIPS_INDEX_5';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, key, 'key', ['trend_boostPoint'], ['desc']);
+            }
+        }
+
+        await Promise.allSettled([articleTopicRelationshipsIndex1(), articleTopicRelationshipsIndex2(), articleTopicRelationshipsIndex3(), articleTopicRelationshipsIndex4(), articleTopicRelationshipsIndex5()]);
     }
 
     /** Create all the indexes for the collection USER_RELATION_SUGGESTIONS */
@@ -380,7 +508,47 @@ export class CollectionIndex {
             }
         };
 
-        await Promise.allSettled([articleDistributionIndex(), articleDistributionIndex2()]);
+        // phase 
+        const articleDistributionIndex3 = async () => {
+            const key = 'ARTICLES_DISTRIBUTION_INDEX_3';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key);
+            } catch (error) {
+                 if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key, 'key', ['phase'], ['asc']);
+            }
+        }
+
+        // createdAt
+        const articleDistributionIndex4 = async () => {
+            const key = 'ARTICLES_DISTRIBUTION_INDEX_4';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key, 'key', ['createdAt'], ['desc']);
+            }
+        }
+
+        // article_docID
+        const articleDistributionIndex5 = async () => {
+            const key = 'ARTICLES_DISTRIBUTION_INDEX_5';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key, 'key', ['article_docID'], ['asc']);
+            }
+        }
+
+        // isStale
+        const articleDistributionIndex6 = async () => {
+            const key = 'ARTICLES_DISTRIBUTION_INDEX_6';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, key, 'key', ['isStale'], ['asc']);
+            }
+        }
+
+        await Promise.allSettled([articleDistributionIndex(), articleDistributionIndex2(), articleDistributionIndex3(), articleDistributionIndex4(), articleDistributionIndex5(), articleDistributionIndex6()]);
     }
 
     /** Create all the indexes for the collection USER_NOTIFICATIONS */
@@ -478,6 +646,21 @@ export class CollectionIndex {
         await Promise.allSettled([articleStoriesIndex()]);
     }
 
+    /** Create all the indexes of USER_RELATIONSHIPS */
+    async createUserRelationIndexes() {
+         // toUser_docID
+         const userRelationIndex1 = async () => {
+             const key = 'USER_RELATIONSHIPS_INDEX_1';
+             try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, key);
+             } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.USER_RELATIONSHIPS, key, 'key', ['toUser_docID'], ['asc']);
+             }
+         }
+
+         await Promise.allSettled([userRelationIndex1()]);
+    }
+
     /**
      * Create all the indexes
      */
@@ -517,5 +700,7 @@ export class CollectionIndex {
         await this.createUserActivitiesIndexes();
         // createArticleStoriesIndexes
         await this.createArticleStoriesIndexes();
+        // createUserRelationIndexes
+        await this.createUserRelationIndexes();
     }
 }

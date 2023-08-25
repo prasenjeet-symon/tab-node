@@ -125,6 +125,7 @@ export class ArticlesCollection {
         id: draftedArticle.doc.originalArticle.docID,
         doc: draftedArticle.doc.article,
       };
+      
       await this.updateArticleInPublishMode(updatedOriginalArticle);
     } else {
       // delete the drafted article and then add the new article in publish mode
@@ -133,6 +134,7 @@ export class ArticlesCollection {
         id: draftedArticle.id,
         doc: draftedArticle.doc.article,
       };
+
       await this.addArticleInPublishMode(newArticle);
     }
   }

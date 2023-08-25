@@ -150,7 +150,7 @@ export async function createArticleDistribution(req: AWFunction.Req, article: MA
     };
 
     if (uniqueUsers.length !== 0) {
-        await database.createDocument(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, articleDistribution.id, serializeAppwriteData(articleDistribution.doc), []);
+        await database.createDocument(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, articleDistribution.id, serializeAppwriteData(articleDistribution.doc), []); // empty permissions list because no client is allowed to access this
     }
 }
 
@@ -189,7 +189,7 @@ export async function increaseBoostPointOfUser(req: AWFunction.Req, article: MAr
 }
 
 /** Increase / decrease related topics boost point */
-export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, article: MArticle.IArticle) {
+export async function increaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, article: MArticle.IArticle) {
     // database connection
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
@@ -344,7 +344,7 @@ export async function makeArticleStory(req: AWFunction.Req, article: MArticle.IA
             updatedAt: new Date(),
             story: {
                 backgroundImage: article.doc.coverImage,
-                summery: article.doc.subTitle,
+                summery: article.doc.subTitle, // we need to use the lama facebook model for this
             },
         },
     };

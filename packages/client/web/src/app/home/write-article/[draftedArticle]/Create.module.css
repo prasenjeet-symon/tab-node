@@ -1,128 +1,149 @@
 .create {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .create > div:nth-of-type(1) {
-  width: 80%;
-  margin: 20px 0px 0px 0px;
+    width: 80%;
+    margin: 20px 0px 0px 0px;
 }
 
 .createHeader {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  padding: 10px 0px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0px;
 }
 
 .createHeader > div:nth-of-type(1) {
-  flex: 1;
-  font-size: 1.4rem;
-  font-weight: 500;
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 500;
 }
 
 .createHeader > div:nth-of-type(2) {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .createHeader > div:nth-of-type(2) button {
-  padding: 8px 15px;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  background-color: var(--background-color);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-weight: 500;
+    padding: 8px 15px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    background-color: var(--background-color);
+    border-radius: var(--button-border-radius);
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .createHeader > div:nth-of-type(2) > button > span {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .createHeader > div:nth-of-type(2) button:nth-of-type(2) {
-  color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
-  font-weight: 500;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    font-weight: 500;
 }
 
 .createHeader > div:nth-of-type(2) button:nth-of-type(3) {
-  background-color: var(--secondary-color);
-  color: var(--on-secondary-color);
-  border: 1px solid var(--secondary-color);
-  font-weight: 500;
+    background-color: var(--secondary-color);
+    color: var(--on-secondary-color);
+    border: 1px solid var(--secondary-color);
+    font-weight: 500;
 }
 
 .createBody {
-  padding: 20px 0px;
+    padding: 20px 0px;
 }
 
 .coverImage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--card-background-color);
-  position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-background-color);
+    position: relative;
 }
 
 .coverImage img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  object-position: center center;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .coverImage .closeButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 15px;
-  border-radius: 50%;
-  padding: 5px;
-  color: white;
-  font-size: 1.5rem;
-  background-color: black;
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
+    border-radius: 50%;
+    padding: 5px;
+    color: white;
+    font-size: 1.5rem;
+    background-color: black;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 
 .plusButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  padding: 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 100px 0px;
 }
 
 .header {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin: 5px 0px;
-  outline: none;
-  color: var(--text-color);
-  padding: 10px 15px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 5px 0px;
+    outline: none;
+    color: var(--text-color);
+    padding: 10px 15px;
 }
 
 .subTitle {
-  font-size: 1.3rem;
-  font-weight: 400;
-  margin: 5px 0px;
-  outline: none;
-  color: var(--text-color);
-  padding: 10px 15px;
-  line-height: 1.9rem;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 5px 0px;
+    outline: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    line-height: 1.9rem;
 }
 
 .editor {
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 10px 15px;
-  outline: none;
-  color: var(--text-color);
-  margin-bottom: 50px;
-  line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 10px 15px;
+    outline: none;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    line-height: 1.5rem;
+}
+
+@media screen and (max-width: 700px) {
+    .createHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .createHeader > div:nth-of-type(1) {
+        padding: 0px 0px 25px 0px;
+    }
+
+    .createHeader > div:nth-of-type(2) {
+        justify-content: center;
+        padding: 0px 0px 15px 0px;
+    }
+
+    .create > div:nth-of-type(1) {
+        width: 95%;
+    }
 }

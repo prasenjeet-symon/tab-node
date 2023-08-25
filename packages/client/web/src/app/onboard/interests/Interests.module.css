@@ -1,70 +1,80 @@
 .interestPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 100px 0px 0px 0px;
-  width: 50%;
-  margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 0px 0px 0px;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .interestPage > div:nth-of-type(1) {
-  font-size: 2rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 0px 0px 30px 0px;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0px 0px 30px 0px;
 }
 
 .interestPage > div:nth-of-type(2) {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 50px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 50px 0px;
 }
 
 .interestPage > div:nth-of-type(2) button {
-  padding: 10px 25px;
-  border-radius: 50px;
-  outline: none;
-  font-size: 0.85rem;
-  font-weight: 400;
-  border: 1px solid var(--primary-color);
-  cursor: pointer;
-  margin: 5px 10px;
-  background-color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    outline: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    margin: 5px 10px;
+    background-color: white;
 }
 
 .interestPage > div:nth-of-type(2) button:hover {
-  background-color: var(--primary-color);
-  color: white;
-  border: 0px;
+    background-color: var(--primary-color);
+    color: white;
+    border: 0px;
 }
 
 .interestPage > div:nth-of-type(3) {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 45px 0px 0px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 0px 0px 0px;
 }
 
 .interestPage > div:nth-of-type(3) button {
-  padding: 10px 30px;
-  border-radius: 50px;
-  background-color: var(--secondary-color);
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border: 0px;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
+    padding: 10px 30px;
+    border-radius: 50px;
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 0px;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
 }
 
 .interestButtonSelected {
-  background-color: var(--primary-color) !important;
-  color: var(--on-primary-color) !important;
+    background-color: var(--primary-color) !important;
+    color: var(--on-primary-color) !important;
+}
+
+@media screen and (max-width: 700px) {
+    .interestPage {
+        width: 95%;
+    }
+
+    .interestPage > div:nth-of-type(3) {
+        padding: 45px 0px 45px 0px;
+    }
 }

@@ -1,5 +1,5 @@
 import { AWFunction, MArticle, deserializeAppwriteData } from '@tabnode/utils';
-import { IncreaseDecreaseRelatedTopicsBoostPoint, addNewActivityForUser, addNotificationForAuthor, createArticleDistribution, increaseBoostPointOfUser, makeArticleStory } from './util';
+import { addNewActivityForUser, addNotificationForAuthor, createArticleDistribution, increaseBoostPointOfUser, increaseDecreaseRelatedTopicsBoostPoint, makeArticleStory } from './util';
 
 module.exports = async function (req: AWFunction.Req, res: AWFunction.Res) {
     const snap = req.variables.APPWRITE_FUNCTION_EVENT_DATA;
@@ -7,7 +7,7 @@ module.exports = async function (req: AWFunction.Req, res: AWFunction.Res) {
 
     await createArticleDistribution(req, data);
     await increaseBoostPointOfUser(req, data);
-    await IncreaseDecreaseRelatedTopicsBoostPoint(req, data);
+    await increaseDecreaseRelatedTopicsBoostPoint(req, data);
     await addNotificationForAuthor(req, data);
     await addNewActivityForUser(req, data);
     await makeArticleStory(req, data);
