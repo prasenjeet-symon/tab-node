@@ -5,6 +5,8 @@
   padding: 22px;
   background-color: rgb(247, 247, 247);
   border-bottom: 1px solid rgb(211, 211, 211);
+  position: sticky;
+  top: 0px;
 }
 
 .header > div:nth-of-type(1) {

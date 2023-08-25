@@ -38,7 +38,11 @@ class Appwrite {
   }
 
   static async currentSession() {
-    return await Appwrite.account().getSession('current');
+    return await Appwrite.account().getSession('current')
+  }
+
+  static async logout() {
+    return await Appwrite.account().deleteSession('current');
   }
 
   /** Get the current logged in user userID */

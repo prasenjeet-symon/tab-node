@@ -27,10 +27,11 @@ function createArticleBody(html: any, markdown: any) {
 
 export default function CreatePost({ params }: { params: { draftedArticle: string } }) {
     const dArticleDocID = params.draftedArticle;
+    const router = useRouter();
+
     const [draftedArticle, setDraftedArticle] = useState<MDraftedArticle.IDraftedArticle>();
     const [canPreview, setCanPreview] = useState(false);
     const [canPublish, setCanPublish] = useState(false);
-    const router = useRouter();
 
     const titleRef = useRef<HTMLDivElement>(null);
     const subTitleRef = useRef<HTMLDivElement>(null);
@@ -129,8 +130,8 @@ export default function CreatePost({ params }: { params: { draftedArticle: strin
 
     /** Delete the cover image */
     const deleteCoverImage = async () => {
-        const appwriteStore = new AppwriteStorage();
         if (!draftedArticle) return;
+        const appwriteStore = new AppwriteStorage();
         await appwriteStore.deleteArticleCoverImage(draftedArticle.id);
         setDraftedArticle((prev) => {
             return produce(prev, (draft) => {
