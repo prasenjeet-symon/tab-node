@@ -1,28 +1,15 @@
 import { AppwriteErrorReporterNodeJs, AppwriteNodeJsClient } from '@tabnode/node-utils';
-import {
-  AWFunction,
-  AppwriteCollection,
-  ArticleBoostPoints,
-  MArticle,
-  MArticleComment,
-  MArticleDistribution,
-  MArticleTopicRelationship,
-  MTopic,
-  MUser,
-  MUserActivity,
-  MUserNotification,
-  MUserRelationSuggestion,
-  MUserRelationship,
-  UserBoostPoints,
-  deserializeAppwriteData,
-  serializeAppwriteData,
-} from '@tabnode/utils';
+import { AWFunction, AppwriteCollection, ArticleBoostPoints, MArticle, MArticleComment, MArticleDistribution, MArticleTopicRelationship, MTopic, MUser, MUserActivity, MUserNotification, MUserRelationSuggestion, MUserRelationship, UserBoostPoints, deserializeAppwriteData, serializeAppwriteData } from '@tabnode/utils';
 import { produce } from 'immer';
 import { Permission, Query, Role } from 'node-appwrite';
 
-/** Add notification to the author */
+/**
+ * Add notification for the author about the comment received on the article
+ * @param req  : AWFunction.Req
+ * @param aComment  : MArticleComment.IArticleComment
+ *
+ */
 export async function addNotificationForAuthor(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
-    // database connection
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -44,7 +31,7 @@ export async function addNotificationForAuthor(req: AWFunction.Req, aComment: MA
             },
             topic: 'COMMENT',
             updatedAt: new Date(),
-            user: aComment.doc.writer,
+            user: aComment.doc.writer, // For whom the notification is sent
         },
     };
 
@@ -56,8 +43,14 @@ export async function addNotificationForAuthor(req: AWFunction.Req, aComment: MA
     ]);
 }
 
-/** Increase boost point of the article */
+/**
+ * Increase the boost point of the article because of the comment. Note that increasing the boost point of the article is same as increasing the boost point of related topics.
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ */
 export async function incDecBoostPointOfArticle(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
+    if (!aComment) return;
+
     try {
         const client = new AppwriteNodeJsClient(req);
         const database = client.database();
@@ -85,7 +78,12 @@ export async function incDecBoostPointOfArticle(req: AWFunction.Req, aComment: M
     }
 }
 
-/** Increase boost point of the article distribution */
+/**
+ * Increase or decrease the boost point of the article distribution because of the comment which decide the popularity of the article
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ * @returns : void
+ */
 export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
     if (!aComment) return;
 
@@ -114,9 +112,15 @@ export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFun
     await database.updateDocument(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, updatedArticleDistribution.id, serializeAppwriteData(updatedArticleDistribution.doc));
 }
 
-/** Increase the user boost point */
+/**
+ * Increase boost point of the commenter because he/she commented on the article which represent the engagement on the platform.
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ * @returns : void
+ */
 export async function increaseBoostPointOfUser(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
-    // database connections
+    if (!aComment) return;
+
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -136,8 +140,8 @@ export async function increaseBoostPointOfUser(req: AWFunction.Req, aComment: MA
 
     const fullUser = await fetchUser(user.docID);
     if (!fullUser) return;
-
     const boostPoint = UserBoostPoints.comment;
+
     const updatedUser = produce(fullUser, (draft) => {
         draft.doc.trend.numberOfComments = draft.doc.trend.numberOfComments + 1;
         draft.doc.trend.boostPoint = draft.doc.trend.boostPoint + boostPoint;
@@ -147,11 +151,17 @@ export async function increaseBoostPointOfUser(req: AWFunction.Req, aComment: MA
     await database.updateDocument(databaseID, AppwriteCollection.USERS, updatedUser.id, serializeAppwriteData(updatedUser.doc));
 }
 
-/** Increase the relationship strength of user and author */
+/**
+ * Increase the relationship strength of the author and the user, because the user did some action for the author
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ * @returns : void
+ */
 export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
     // in this case user will gift to author because user did some action for the author
     // user is interested in author he must scarifies something as gift to make relationship with author
     // ( user ) -----> ( author ) relation graph
+    if (!aComment) return;
 
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
@@ -170,7 +180,6 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
 
     const fullArticle = await fetchFullArticle(aComment.doc.article.docID);
     if (!fullArticle) return;
-
     const boostPoint = UserBoostPoints.comment;
 
     const fetchFollowRelation = async (fromUser: MUser.SUser, toUser: MUser.SUser) => {
@@ -192,9 +201,15 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
     }
 }
 
-/** Suggest user author to follow if applicable */
+/**
+ * Suggest user author to follow ( user might be interested in author and may want to receive article notification in the form the story )
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ * @returns : void
+ */
 export async function suggestUserAuthorToFollow(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
-    // database connection
+    if (!aComment) return;
+
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -220,8 +235,11 @@ export async function suggestUserAuthorToFollow(req: AWFunction.Req, aComment: M
     };
 
     const followRelation = await fetchFollowRelation(aComment.doc.commentedBy, fullArticle.doc.writer);
-
-    if (followRelation) return;
+    if (followRelation) {
+        // user is already following author
+        // no need to suggest author to follow
+        return;
+    }
 
     const fetchFollowSuggestion = async (user: MUser.SUser, author: MUser.SUser) => {
         const snap = await database.listDocuments(databaseID, AppwriteCollection.USER_RELATION_SUGGESTIONS, [Query.equal('for_docID', user.docID), Query.equal('user_docID', author.docID)]);
@@ -230,13 +248,17 @@ export async function suggestUserAuthorToFollow(req: AWFunction.Req, aComment: M
     };
 
     const followSuggestion = await fetchFollowSuggestion(aComment.doc.commentedBy, fullArticle.doc.writer);
-    if (followSuggestion) return;
+    if (followSuggestion) {
+        // author is already suggested to the user
+        // no need to suggest author to follow
+        return;
+    }
 
     // create follow suggestion
     const newFollowSuggestion: MUserRelationSuggestion.IUserRelationSuggestion = {
         id: client.uniqueID(),
         doc: {
-            boostPoint: 3, // three impression
+            boostPoint: 3, // three impression ( 3 )
             createdAt: new Date(),
             for: aComment.doc.commentedBy,
             user: fullArticle.doc.writer,
@@ -254,8 +276,13 @@ export async function suggestUserAuthorToFollow(req: AWFunction.Req, aComment: M
     ]);
 }
 
-/** Increase / decrease related topics boost point */
-export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
+/**
+ * Increase the boost point of the related universal topics because the user commented on the article
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ */
+export async function increaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
+    if (!aComment) return;
     // database connection
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
@@ -297,9 +324,13 @@ export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Re
     await Promise.all(updatedTopics.map((topic) => database.updateDocument(databaseID, AppwriteCollection.TOPICS, topic.id, serializeAppwriteData(topic.doc))));
 }
 
-/** Add new activity for the author */
+/**
+ * Add new activity for the user, because the user commented on the article and this should re recorded as an activity on the user profile
+ * @param req : AWFunction.Req
+ * @param aComment : MArticleComment.IArticleComment
+ */
 export async function addNewActivityForUser(req: AWFunction.Req, aComment: MArticleComment.IArticleComment) {
-    // database connection
+    if(!aComment) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -315,10 +346,5 @@ export async function addNewActivityForUser(req: AWFunction.Req, aComment: MArti
         },
     };
 
-    await database.createDocument(databaseID, AppwriteCollection.USER_ACTIVITIES, activity.id, serializeAppwriteData(activity.doc), [
-        Permission.write(Role.user(activity.doc.user.docID)),
-        Permission.delete(Role.user(activity.doc.user.docID)),
-        Permission.update(Role.user(activity.doc.user.docID)),
-        Permission.read(Role.any()),
-    ]);
+    await database.createDocument(databaseID, AppwriteCollection.USER_ACTIVITIES, activity.id, serializeAppwriteData(activity.doc), [Permission.write(Role.user(activity.doc.user.docID)), Permission.delete(Role.user(activity.doc.user.docID)), Permission.update(Role.user(activity.doc.user.docID)), Permission.read(Role.any())]);
 }

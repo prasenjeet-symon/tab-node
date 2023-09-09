@@ -13,13 +13,23 @@ export default function Comments({ articleDocID, parentDocID, articleTitle, writ
     const [loading, setLoading] = useState(true);
     const [canShowReply , setCanShowReply] = useState<{ parentCommentDocID: string; canShowReply: boolean }[]>([]);
     const [prevCursor, setPrevCursor] = useState<MArticleComment.IArticleComment | undefined>(undefined);
+    const [user, setUser] = useState<MUser.SUser>();
     const commentRef = useRef<HTMLTextAreaElement>(null);
     const LIMIT = 10;
 
+    const fetchCurrentLoginUser = async () => {
+        const database = new AppwriteDatabase();
+        const currentUser = await database.fetchLoginUser();
+        if (!currentUser) return;
+        return currentUser;
+    }
+
     const fetchComments = async () => {
+        setLoading(true);
         const database = new AppwriteDatabase();
         const comments = parentDocID ? await database.fetchChildComments(parentDocID, prevCursor, LIMIT) : await database.fetchComments(articleDocID, prevCursor, LIMIT);
-        if (!comments) return;
+        setLoading(false);
+        if (!(comments && comments.length !== 0)) return;
         setPrevCursor((prev) => {
             return comments[comments.length - 1];
         });
@@ -31,12 +41,16 @@ export default function Comments({ articleDocID, parentDocID, articleTitle, writ
 
     useEffect(() => {
         fetchComments();
+        fetchCurrentLoginUser().then((user) => {
+           if(!user) return;
+           setUser({aboutMe: user.doc.aboutMe, docID: user.id, fullName: user.doc.fullName, profilePic: user.doc.profilePic});
+        });
     }, []);
 
     // add new comment
     const addComment = async () => {
         const commentText = commentRef.current?.value;
-        if (!commentText) return;
+        if (!(commentText && commentText.trim().length !== 0)) return;
 
         const database = new AppwriteDatabase();
         const currentUser = await database.fetchLoginUser();
@@ -119,7 +133,7 @@ export default function Comments({ articleDocID, parentDocID, articleTitle, writ
                     </div>
                     <div>
                         <button onClick={addComment} type="button">
-                            Add Comment
+                            { parentDocID ? 'Reply' : 'Add Comment' }
                         </button>
                     </div>
                 </div>
@@ -138,8 +152,8 @@ export default function Comments({ articleDocID, parentDocID, articleTitle, writ
                                 </div> 
                                 <div>{p.doc.body}</div>
                                 <div>
-                                    <button onClick={ () => ShowHideReply(p) } >Reply</button>
-                                    <button onClick={()=> deleteComment(p)} title='Delete Comment' type='button'><AiFillDelete/> </button>
+                                    <button type='button' onClick={ () => ShowHideReply(p) } >Reply</button>
+                                    { user?.docID === p.doc.commentedBy.docID ? <button type='button' onClick={()=> deleteComment(p)} title='Delete Comment'><AiFillDelete/> </button> : null }
                                 </div>
                                 <div>
                                     { getCanShowReply(p) ? <Comments articleDocID={articleDocID} articleTitle={articleTitle} parentDocID={p.id} writer={writer}/> : null }
