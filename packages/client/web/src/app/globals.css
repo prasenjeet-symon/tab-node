@@ -43,6 +43,7 @@ body.preview-open::-webkit-scrollbar {
     border-radius: 5px;
     background-color: var(--background-color);
     cursor: pointer;
+    margin-top: 10px;
 }
 
 /* For the follow button */
@@ -159,6 +160,7 @@ button.filledButton > span {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .contentArticle .heading {
@@ -317,7 +319,7 @@ button.filledButton > span {
 
     /** Article CSS **/
     .contentArticle {
-        width: 95%;
+        width: 100%;
         margin: 0 auto;
         padding: 20px 0px;
     }
@@ -332,7 +334,7 @@ button.filledButton > span {
     .contentArticle .body {
         width: 95%;
     }
-    
+
     .contentArticle .subHeading {
         width: 95%;
     }

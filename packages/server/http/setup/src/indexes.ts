@@ -82,9 +82,18 @@ export class CollectionIndex {
             }
         }
 
-        
+        // 'article_docID', 'parentComment_docID',
+        const commentsIndex6 = async () => {
+            const key = 'COMMENTS_INDEX_6';
+            try {
+                await this.databases.getIndex(this.databaseID, AppwriteCollection.COMMENTS, key);
+            } catch (error) {
+                if(error instanceof AppwriteException && error.code === 404) await this.databases.createIndex(this.databaseID, AppwriteCollection.COMMENTS, key, 'key', ['article_docID', 'parentComment_docID'], ['asc', 'asc']);
+            }
+        }
 
-        await Promise.allSettled([commentsIndex1(), commentsIndex2(), commentsIndex3(), commentsIndex4(), commentsIndex5()]);
+    
+        await Promise.allSettled([commentsIndex1(), commentsIndex2(), commentsIndex3(), commentsIndex4(), commentsIndex5(), commentsIndex6()]);
     }
 
     /**

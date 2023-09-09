@@ -1,5 +1,5 @@
 import { AWFunction, MArticleComment, deserializeAppwriteData } from '@tabnode/utils';
-import { IncreaseDecreaseRelatedTopicsBoostPoint, addNewActivityForUser, addNotificationForAuthor, incDecBoostPointOfArticle, increaseBoostPointOfUser, increaseDecreaseBoostPointOfArticleDistribution, increaseDecreaseRelationshipStrengthOfAuthorAndUser, suggestUserAuthorToFollow } from './util';
+import { increaseDecreaseRelatedTopicsBoostPoint, addNewActivityForUser, addNotificationForAuthor, incDecBoostPointOfArticle, increaseBoostPointOfUser, increaseDecreaseBoostPointOfArticleDistribution, increaseDecreaseRelationshipStrengthOfAuthorAndUser, suggestUserAuthorToFollow } from './util';
 
 module.exports = async function (req: AWFunction.Req, res: AWFunction.Res) {
     const snap = req.variables.APPWRITE_FUNCTION_EVENT_DATA;
@@ -11,7 +11,7 @@ module.exports = async function (req: AWFunction.Req, res: AWFunction.Res) {
     await increaseBoostPointOfUser(req, data);
     await increaseDecreaseRelationshipStrengthOfAuthorAndUser(req, data);
     await suggestUserAuthorToFollow(req, data);
-    await IncreaseDecreaseRelatedTopicsBoostPoint(req, data);
+    await increaseDecreaseRelatedTopicsBoostPoint(req, data);
     await addNewActivityForUser(req, data);
 
     res.send('OK', 200);
