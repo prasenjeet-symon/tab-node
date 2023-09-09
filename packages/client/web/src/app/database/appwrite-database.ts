@@ -414,6 +414,11 @@ export default class AppwriteDatabase {
         return this.savedArticlesCollection.isSavedByUserArticle(articleDocID);
     }
 
+    /** Fetch single saved article given user  and article */
+    public async fetchSavedArticle(userDocID: string, articleDocID: string) {
+        return this.savedArticlesCollection.fetchSavedArticle(userDocID, articleDocID);
+    }
+
     /** Fetch social link of the public user */
     public async fetchSocialLink(userDocID: string) {
         return this.userSocialLinksCollection.fetchAllLinks(userDocID);

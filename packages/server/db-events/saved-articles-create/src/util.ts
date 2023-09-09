@@ -3,13 +3,17 @@ import { AWFunction, AppwriteCollection, ArticleBoostPoints, MArticle, MArticleD
 import { produce } from 'immer';
 import { Query } from 'node-appwrite';
 
-/** Increase the boost point for the event creator */
+/**
+ * Increase boost point of user before of saving
+ * @param req : AWFunction.Req
+ * @param aSaved : MSavedArticle.ISavedArticle
+ * @returns : void
+ */
 export async function increaseBoostPointOfUser(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
-    // database connections
+    if (!aSaved) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
-
     const user = aSaved.doc.savedBy;
 
     const fetchUser = async (userDocID: string) => {
@@ -36,8 +40,14 @@ export async function increaseBoostPointOfUser(req: AWFunction.Req, aSaved: MSav
     await database.updateDocument(databaseID, AppwriteCollection.USERS, updatedUser.id, serializeAppwriteData(updatedUser.doc));
 }
 
-/** Inc/Desc boost point of article */
+/**
+ * Increase boost point of article due to saving
+ * @param req : AWFunction.Req
+ * @param aSaved : MSavedArticle.ISavedArticle
+ */
 export async function incDecBoostPointOfArticle(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
+    if (!aSaved) return;
+
     try {
         const client = new AppwriteNodeJsClient(req);
         const database = client.database();
@@ -49,12 +59,12 @@ export async function incDecBoostPointOfArticle(req: AWFunction.Req, aSaved: MSa
         };
 
         let articleTopicRelations = await fetchArticleOfTopic(aSaved.doc.article.docID);
-
         const boostPoint = ArticleBoostPoints.save;
-        // updated the boost point
+
         articleTopicRelations = produce(articleTopicRelations, (draft) => {
             draft.forEach((p) => {
                 p.doc.trend.boostPoint = p.doc.trend.boostPoint + boostPoint;
+                p.doc.updatedAt = new Date();
             });
         });
 
@@ -65,13 +75,19 @@ export async function incDecBoostPointOfArticle(req: AWFunction.Req, aSaved: MSa
     }
 }
 
-/** Increase or decrease the boost point of the article distribution if applicable */
+/**
+ * Increase/Decrease boost point of article distribution due to saving
+ * @param req : AWFunction.Req
+ * @param aSaved : MSavedArticle.ISavedArticle
+ * @returns : void
+ */
 export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
+    if(!aSaved) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
 
-    // fetch active article distribution latest of this article
+
     const fetchArticleDistribution = async (articleDocID: string) => {
         const snap = await database.listDocuments(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, [Query.equal('article_docID', articleDocID), Query.equal('isStale', false), Query.orderDesc('createdAt'), Query.limit(1)]);
         const allArticleDistributions = snap.documents.map((doc) => deserializeAppwriteData(doc) as MArticleDistribution.IArticleDistribution);
@@ -92,12 +108,18 @@ export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFun
     await database.updateDocument(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, updatedArticleDistribution.id, serializeAppwriteData(updatedArticleDistribution.doc));
 }
 
-/** Increase decrease relationship strength of author and user */
+/**
+ * Increase/Decrease relationship strength of author and user
+ * @param req : AWFunction.Req
+ * @param aSaved : MSavedArticle.ISavedArticle
+ * @returns : void
+ */
 export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
     // in this case user will gift to author because user did some action for the author
     // user is interested in author he must scarifies something as gift to make relationship with author
     // ( user ) -----> ( author ) relation graph
 
+    if(!aSaved) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -115,7 +137,6 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
 
     const fullArticle = await fetchFullArticle(aSaved.doc.article.docID);
     if (!fullArticle) return;
-
     const boostPoint = UserBoostPoints.save;
 
     const fetchFollowRelation = async (fromUser: MUser.SUser, toUser: MUser.SUser) => {
@@ -137,14 +158,17 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
     }
 }
 
-/** Increase / decrease related topics boost point */
-export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
-    // database connection
+/**
+ * Increase/Decrease related topics boost point
+ * @param req : AWFunction.Req
+ * @param aSaved : MSavedArticle.ISavedArticle
+ */
+export async function increaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aSaved: MSavedArticle.ISavedArticle) {
+    if(!aSaved) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
 
-    // fetch all the topics of involved article
     const fetchAllTopicsOfArticle = async (articleDocID: string) => {
         const snap = await database.listDocuments(databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, [Query.equal('article_docID', articleDocID)]);
         return snap.documents.map((doc) => deserializeAppwriteData(doc) as MArticleTopicRelationship.IArticleTopicRelationship);

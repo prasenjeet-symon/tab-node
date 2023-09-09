@@ -17,6 +17,7 @@ export default function Saved({ params }: { params: { userDocID: string } }) {
     const LIMIT = 10;
 
     const fetchSaved = async () => {
+        setLoading(true);
         const database = new AppwriteDatabase();
         const savedFetched = await database.fetchSavedArticles(params.userDocID, prevCourser, LIMIT);
         setSaved(
@@ -25,15 +26,16 @@ export default function Saved({ params }: { params: { userDocID: string } }) {
             })
         );
 
-        setPrevCourser(savedFetched[savedFetched.length - 1]);
+        if (savedFetched.length !== 0) setPrevCourser(savedFetched[savedFetched.length - 1]);
 
-        // fetch full articles
         const fullArticles = await Promise.all(savedFetched.map((p) => fetchFullArticle(p.doc.article.docID)));
         setFullArticles(
             produce((draft) => {
                 draft.push(...fullArticles);
             })
         );
+
+        setLoading(false);
     };
 
     const fetchFullArticle = async (articleDocID: string) => {
@@ -47,20 +49,26 @@ export default function Saved({ params }: { params: { userDocID: string } }) {
     }, []);
 
     return (
-        <section className={styles.saved}>
-            {fullArticles.map((p) => {
-                return <Article key={p.id} article={p} />;
-            })}
+        <>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <section className={styles.saved}>
+                    {fullArticles.map((p) => {
+                        return <Article key={p.id} article={p} />;
+                    })}
 
-            {fullArticles.length === 0 ? <NotFound title="Nothing saved here" subTitle="Looks like you have not saved anything yet" action={() => {}} actionName="" image="/empty_save.svg" /> : null}
+                    {fullArticles.length === 0 ? <NotFound title="Nothing saved here" subTitle="Looks like you have not saved anything yet" action={() => {}} actionName="" image="/empty_save.svg" /> : null}
 
-            <div>
-                {fullArticles.length === 0 ? null : (
-                    <button onClick={fetchSaved} type="button" className="outlineButton">
-                        Load More
-                    </button>
-                )}
-            </div>
-        </section>
+                    <div>
+                        {fullArticles.length === 0 ? null : (
+                            <button onClick={fetchSaved} type="button" className="outlineButton">
+                                Load More
+                            </button>
+                        )}
+                    </div>
+                </section>
+            )}
+        </>
     );
 }

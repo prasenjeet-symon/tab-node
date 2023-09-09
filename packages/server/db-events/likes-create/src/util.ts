@@ -20,10 +20,14 @@ import {
 import { produce } from 'immer';
 import { Permission, Query, Role } from 'node-appwrite';
 
-/** Add notification for the author */
+/**
+ * Add notification for the author about the like received on the article
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ * @returns : void
+ */
 export async function addNotificationForAuthor(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
     if (!aLike) return;
-
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -61,8 +65,14 @@ export async function addNotificationForAuthor(req: AWFunction.Req, aLike: MArti
     ]);
 }
 
-/** Inc/Desc boost point of article */
+/**
+ * Increase the boost point of the article which is same as increasing the boost point of related topics
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ */
 export async function incDecBoostPointOfArticle(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
+    if(!aLike) return;
+
     try {
         const client = new AppwriteNodeJsClient(req);
         const database = client.database();
@@ -74,12 +84,12 @@ export async function incDecBoostPointOfArticle(req: AWFunction.Req, aLike: MArt
         };
 
         let articleTopicRelations = await fetchArticleOfTopic(aLike.doc.article.docID);
-
         const boostPoint = aLike.doc.status === 'LIKED' ? ArticleBoostPoints.like : ArticleBoostPoints.dislike;
         // updated the boost point
         articleTopicRelations = produce(articleTopicRelations, (draft) => {
             draft.forEach((p) => {
                 p.doc.trend.boostPoint = p.doc.trend.boostPoint + boostPoint;
+                p.doc.updatedAt = new Date();
             });
         });
 
@@ -90,13 +100,18 @@ export async function incDecBoostPointOfArticle(req: AWFunction.Req, aLike: MArt
     }
 }
 
-/** Increase the boost point of the user */
+/**
+ * Increase boost point of the user because of the like
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ * @returns : void
+ */
 export async function increaseBoostPointOfUser(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
+    if(!aLike) return;
     // database connections
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
-
     const user = aLike.doc.likedBy;
 
     const fetchUser = async (userDocID: string) => {
@@ -123,7 +138,12 @@ export async function increaseBoostPointOfUser(req: AWFunction.Req, aLike: MArti
     await database.updateDocument(databaseID, AppwriteCollection.USERS, updatedUser.id, serializeAppwriteData(updatedUser.doc));
 }
 
-/** Increase or decrease the boost point of the article distribution if applicable */
+/**
+ * Increase/Decrease boost point of the article distribution because of the like/dislike
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ * @returns : void
+ */
 export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
     if (!aLike) return;
 
@@ -152,7 +172,12 @@ export async function increaseDecreaseBoostPointOfArticleDistribution(req: AWFun
     await database.updateDocument(databaseID, AppwriteCollection.ARTICLES_DISTRIBUTION, updatedArticleDistribution.id, serializeAppwriteData(updatedArticleDistribution.doc));
 }
 
-/** Increase decrease relationship strength of author and user */
+/**
+ * Increase/Decrease relationship strength of author and user
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ * @returns : void
+ */
 export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
     // in this case user will gift to author because user did some action for the author
     // user is interested in author he must scarifies something as gift to make relationship with author
@@ -175,7 +200,6 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
 
     const fullArticle = await fetchFullArticle(aLike.doc.article.docID);
     if (!fullArticle) return;
-
     const boostPoint = aLike.doc.status === 'LIKED' ? UserBoostPoints.like : UserBoostPoints.dislike;
 
     const fetchFollowRelation = async (fromUser: MUser.SUser, toUser: MUser.SUser) => {
@@ -185,7 +209,6 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
     };
 
     const followRelation = await fetchFollowRelation(aLike.doc.likedBy, fullArticle.doc.writer);
-
     if (followRelation) {
         // add boost point to the to trend ( user ) ----> ( author )
         const updatedFollowRelation = produce(followRelation, (draft) => {
@@ -197,9 +220,14 @@ export async function increaseDecreaseRelationshipStrengthOfAuthorAndUser(req: A
     }
 }
 
-/** Suggest user author to follow if applicable */
+/**
+ * Suggest user author to follow ( might be interested in the author )
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ * @returns : void
+ */
 export async function suggestUserAuthorToFollow(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
-    // database connection
+    if(!aLike) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
@@ -225,7 +253,6 @@ export async function suggestUserAuthorToFollow(req: AWFunction.Req, aLike: MArt
     };
 
     const followRelation = await fetchFollowRelation(aLike.doc.likedBy, fullArticle.doc.writer);
-
     if (followRelation) return;
 
     const fetchFollowSuggestion = async (user: MUser.SUser, author: MUser.SUser) => {
@@ -259,20 +286,23 @@ export async function suggestUserAuthorToFollow(req: AWFunction.Req, aLike: MArt
     ]);
 }
 
-/** Increase / decrease related topics boost point */
-export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
-    // database connection
+/**
+ * Increase / Decrease boost point of the related universal topics
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ */
+export async function increaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
+    if(!aLike) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
 
-    // fetch all the topics of involved article
     const fetchAllTopicsOfArticle = async (articleDocID: string) => {
         const snap = await database.listDocuments(databaseID, AppwriteCollection.ARTICLE_TOPIC_RELATIONSHIPS, [Query.equal('article_docID', articleDocID)]);
         return snap.documents.map((doc) => deserializeAppwriteData(doc) as MArticleTopicRelationship.IArticleTopicRelationship);
     };
 
-    // fetch full topic given topic docID
+   
     const fetchFullTopic = async (topicDocID: string) => {
         try {
             const snap = await database.getDocument(databaseID, AppwriteCollection.TOPICS, topicDocID);
@@ -302,9 +332,13 @@ export async function IncreaseDecreaseRelatedTopicsBoostPoint(req: AWFunction.Re
     await Promise.all(updatedTopics.map((topic) => database.updateDocument(databaseID, AppwriteCollection.TOPICS, topic.id, serializeAppwriteData(topic.doc))));
 }
 
-/** Add new activity for the author */
+/**
+ * Add new activity for user about the new like that will be displayed on the profile
+ * @param req : AWFunction.Req
+ * @param aLike : MArticleLike.IArticleLike
+ */
 export async function addNewActivityForUser(req: AWFunction.Req, aLike: MArticleLike.IArticleLike) {
-    // database connection
+    if(!aLike) return;
     const client = new AppwriteNodeJsClient(req);
     const database = client.database();
     const databaseID = client.databaseID();
