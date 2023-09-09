@@ -11,6 +11,7 @@ import { v4 } from 'uuid';
 import styles from './Article.module.css';
 import ArticleActions from './components/ArticleActions/ArticleActions';
 import Comments from './components/Comments/Comments';
+import Appwrite from '@/app/appwrite';
 
 function extractHtmlData(body: any) {
     return body ? body.split('==========markdown==========')[1] : '';
@@ -87,34 +88,48 @@ export default function ArticlePage({ params }: { params: { articleDocID: string
 
         const database = new AppwriteDatabase();
         const isLikedFetched = await database.isLikedByUserArticle(params.articleDocID);
-        if (isLikedFetched) {
-            // delete the like
-            return;
-        } else {
-            const currentUser = await database.fetchLoginUser();
-            if (!currentUser) return;
-            // add new like
-            const like: MArticleLike.IArticleLike = {
-                id: v4(),
-                doc: {
-                    article: {
-                        docID: article.id,
-                        title: article.doc.title,
-                    },
-                    createdAt: new Date(),
-                    likedBy: {
-                        aboutMe: currentUser.doc.aboutMe,
-                        docID: currentUser.id,
-                        fullName: currentUser.doc.fullName,
-                        profilePic: currentUser.doc.profilePic,
-                    },
-                    status: 'LIKED',
-                    updatedAt: new Date(),
-                },
-            };
+        if (isLikedFetched) return;
 
-            await database.addLikeDislike(like);
-        }
+        const currentUser = await database.fetchLoginUser();
+        if (!currentUser) return;
+        // add new like
+        const like: MArticleLike.IArticleLike = {
+            id: v4(),
+            doc: {
+                article: {
+                    docID: article.id,
+                    title: article.doc.title,
+                },
+                createdAt: new Date(),
+                likedBy: {
+                    aboutMe: currentUser.doc.aboutMe,
+                    docID: currentUser.id,
+                    fullName: currentUser.doc.fullName,
+                    profilePic: currentUser.doc.profilePic,
+                },
+                status: 'LIKED',
+                updatedAt: new Date(),
+            },
+        };
+
+        await database.addLikeDislike(like);
+    };
+
+    /**
+     * Remove from the save
+     */
+    const removeFromSaved = async () => {
+        if (!article) return;
+        setIsSaved(false);
+
+        const database = new AppwriteDatabase();
+       
+        const userDocID = await Appwrite.currentUserID();
+
+        const savedArticle = await database.fetchSavedArticle(userDocID, article.id);
+        if (!savedArticle) return;
+        
+        await database.removeSavedArticle(savedArticle);
     };
 
     const saveArticle = async () => {
@@ -124,34 +139,37 @@ export default function ArticlePage({ params }: { params: { articleDocID: string
         const database = new AppwriteDatabase();
         const isSavedFetched = await database.isSavedByUserArticle(params.articleDocID);
         if (isSavedFetched) {
-            // delete the saved article
+            await removeFromSaved();
             return;
-        } else {
-            // add new saved
-            const currentUser = await database.fetchLoginUser();
-            if (!currentUser) return;
-            const saved: MSavedArticle.ISavedArticle = {
-                id: v4(),
-                doc: {
-                    article: {
-                        docID: article.id,
-                        title: article.doc.title,
-                    },
-                    createdAt: new Date(),
-                    savedBy: {
-                        aboutMe: currentUser.doc.aboutMe,
-                        docID: currentUser.id,
-                        fullName: currentUser.doc.fullName,
-                        profilePic: currentUser.doc.profilePic,
-                    },
-                    updatedAt: new Date(),
-                    writer: article.doc.writer,
-                },
-            };
+        };
+        
+        // add new saved
+        const currentUser = await database.fetchLoginUser();
+        if (!currentUser) return;
 
-            await database.saveArticle(saved);
-        }
+        const saved: MSavedArticle.ISavedArticle = {
+            id: v4(),
+            doc: {
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                writer: article.doc.writer,
+                article: {
+                    docID: article.id,
+                    title: article.doc.title,
+                },
+                savedBy: {
+                    aboutMe: currentUser.doc.aboutMe,
+                    docID: currentUser.id,
+                    fullName: currentUser.doc.fullName,
+                    profilePic: currentUser.doc.profilePic,
+                },
+            },
+        };
+
+        await database.saveArticle(saved);
     };
+
+    
 
     return (
         <>

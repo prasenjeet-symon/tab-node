@@ -9,7 +9,7 @@ export default function ArticleActions({ isLiked, isSaved, like, save }: { isLik
     <>
     <section className={styles.actions}>
         {  isLiked ? <button title='Like' type='button'> <AiFillLike/></button> : <button onClick={like} title='Like' type='button'> <AiOutlineLike/></button> } 
-        { isSaved ? <button title='Save' type='button'><FaBookmark/></button> : <button onClick={save} title='Save' type='button'><FaRegBookmark/></button>  }    
+        { isSaved ? <button onClick={save} title='Save' type='button'><FaBookmark/></button> : <button onClick={save} title='Save' type='button'><FaRegBookmark/></button>  }    
     </section>
     </>
    )
